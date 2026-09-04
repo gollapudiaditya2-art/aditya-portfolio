@@ -24,7 +24,6 @@ export function Menu({ activeScreen, isOpen, onNavigate, onScrollHome }) {
           {item('ux-index', '03', 'UX/UI')}
           {item('about', '04', 'About')}
           <li><a href="/#contact" onClick={(event) => { event.preventDefault(); onScrollHome('contact') }}><span className="mn" aria-hidden="true">05</span><span className="ml">Contact</span></a></li>
-          {item('colophon', '06', 'Colophon')}
         </ul>
         <div className="m-meta">
           <div className="m-col"><p className="m-col-label">Elsewhere</p><a href="https://www.linkedin.com/in/gollapudiaditya/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://www.behance.net/adityag2" target="_blank" rel="noreferrer">Behance</a><a href="https://github.com/gollapudiaditya2-art" target="_blank" rel="noreferrer">GitHub</a></div>

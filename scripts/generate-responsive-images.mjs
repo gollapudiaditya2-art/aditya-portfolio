@@ -5,7 +5,7 @@ import sharp from 'sharp'
 const root = process.cwd()
 const sourceDirectory = path.join(root, 'public', 'assets', 'images', 'web-projects')
 const outputDirectory = path.join(sourceDirectory, 'responsive')
-const projects = ['sanathan-sethu-macbook', 'seeker-social-macbook', 'vaijayanthy-macbook']
+const projects = ['sanathan-sethu-macbook', 'seeker-social-macbook', 'vaijayanthy-macbook', 'world-clock-macbook']
 const widths = [768, 1280, 1920]
 
 await mkdir(outputDirectory, { recursive: true })

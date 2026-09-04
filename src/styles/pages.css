@@ -119,6 +119,10 @@
   background: linear-gradient(145deg,#9b8056,#403522);
 }
 
+.work-card.worldclock .work-bg {
+  background: linear-gradient(145deg,#3a2a16,#0c0906);
+}
+
 .work-in,.pc-in {
   position: relative;
   z-index: 2;

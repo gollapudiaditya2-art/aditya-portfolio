@@ -8,6 +8,10 @@ export const GENERATED_IMAGE_DIMENSIONS = {
     971,
     546
   ],
+  "assets/brand/aditya-mark-white.svg": [
+    367,
+    335
+  ],
   "assets/brand/aditya-mark.svg": [
     367,
     335
@@ -900,6 +904,18 @@ export const GENERATED_IMAGE_DIMENSIONS = {
     768,
     576
   ],
+  "assets/images/web-projects/responsive/world-clock-macbook-1280.webp": [
+    1280,
+    720
+  ],
+  "assets/images/web-projects/responsive/world-clock-macbook-1920.webp": [
+    1920,
+    1080
+  ],
+  "assets/images/web-projects/responsive/world-clock-macbook-768.webp": [
+    768,
+    432
+  ],
   "assets/images/web-projects/sanathan-sethu-macbook.png": [
     4000,
     3000
@@ -911,5 +927,9 @@ export const GENERATED_IMAGE_DIMENSIONS = {
   "assets/images/web-projects/vaijayanthy-macbook.png": [
     4000,
     3000
+  ],
+  "assets/images/web-projects/world-clock-macbook.png": [
+    1920,
+    1080
   ]
 }

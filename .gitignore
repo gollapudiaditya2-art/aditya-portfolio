@@ -28,3 +28,6 @@ skills-lock.json
 .cura-*/
 .forkast-*/
 .reference-audit/
+
+# Local Netlify folder
+.netlify
