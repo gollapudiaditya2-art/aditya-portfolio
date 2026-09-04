@@ -32,7 +32,7 @@ export function HomeScreen({ go }) {
               <h1 className="hero-wordmark" aria-label="Aditya Gollapudi">
                 <PortfolioImage
                   className="hero-wordmark-art"
-                  src="assets/brand/aditya-gollapudi-wordmark-hero.svg"
+                  src="/assets/brand/aditya-gollapudi-wordmark-hero.svg"
                   alt=""
                   aria-hidden="true"
                   loading="eager"
@@ -95,11 +95,11 @@ export function HomeScreen({ go }) {
       <div className="proj-cards" id="work">
         <div className="pc-head"><h2>Selected work</h2></div>
         <a className="pcard aurio" href={routePath('id-aurio')} onClick={(event) => go('id-aurio', event)}>
-          <PortfolioImage className="pc-bg" src="assets/images/aurio/Untitled6 (1) 1.jpg" loading="lazy" decoding="async" alt="" />
+          <PortfolioImage className="pc-bg" src="/assets/images/aurio/Untitled6 (1) 1.jpg" loading="lazy" decoding="async" alt="" />
           <div className="pc-in"><h3>Aurio</h3><p>A hearing-support wearable designed to be worn openly, like earbuds, not hidden like a medical aid.</p><span className="pc-go">View the product <ArrowIcon /></span></div>
         </a>
         <a className="pcard forkast" href={routePath('ux-forkast-visual')} onClick={(event) => go('ux-forkast-visual', event)}>
-          <PortfolioImage className="pc-bg" src="assets/images/forkast/showcase/forkast-allergy-hero.jpg" loading="lazy" decoding="async" alt="" />
+          <PortfolioImage className="pc-bg" src="/assets/images/forkast/showcase/forkast-allergy-hero.jpg" loading="lazy" decoding="async" alt="" />
           <div className="pc-in"><h3>Forkast</h3><p>A restaurant allergy platform that carries one clear safety verdict from the diner's phone all the way to the line cook.</p><span className="pc-go">Read the case study <ArrowIcon /></span></div>
         </a>
       </div>

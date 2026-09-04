@@ -129,7 +129,7 @@ export function ResearchPlan() {
 export function MainInsight() {
   return (
     <figure className="cura-main-insight">
-      <PortfolioImage src="assets/images/cura/iPhone 16 Pro.png" loading="lazy" decoding="async" alt="Cura medication experience shown in context on a phone" />
+      <PortfolioImage src="/assets/images/cura/iPhone 16 Pro.png" loading="lazy" decoding="async" alt="Cura medication experience shown in context on a phone" />
       <figcaption>
         <h3>Main insight from research</h3>
         <blockquote>Medication adherence breaks when routines change, not simply because people forget.</blockquote>
@@ -163,12 +163,12 @@ export function ConceptModel() {
       </StoryHeading>
       <div className="cura-concept-model">
         <article>
-          <PortfolioImage src="assets/images/cura/Hand and iPhone 16 Pro-!.png" loading="lazy" decoding="async" alt="Person using the Cura medication schedule" />
+          <PortfolioImage src="/assets/images/cura/Hand and iPhone 16 Pro-!.png" loading="lazy" decoding="async" alt="Person using the Cura medication schedule" />
           <div><span>Primary user</span><h4>Independent routine</h4><p>Flexible time windows and clear recovery keep control with the person taking medication.</p></div>
         </article>
         <div className="cura-concept-bridge"><strong>Shared dose state</strong><span>Upcoming · Due · Late · Taken · Missed</span></div>
         <article>
-          <PortfolioImage src="assets/images/cura/iPhone 16 Pro - 51.png" loading="lazy" decoding="async" alt="Cura family-support setup screen" />
+          <PortfolioImage src="/assets/images/cura/iPhone 16 Pro - 51.png" loading="lazy" decoding="async" alt="Cura family-support setup screen" />
           <div><span>Support layer</span><h4>Meaningful exceptions</h4><p>Explicit consent and delayed escalation reduce monitoring pressure and notification fatigue.</p></div>
         </article>
       </div>
@@ -290,7 +290,7 @@ export function Wireframes() {
         Low-fidelity screens established navigation, scheduling, dose actions, and family visibility before visual polish.
       </StoryHeading>
       <div className="cura-wireframe-grid">
-        {wireframes.map(([file, label]) => <figure key={file}><PortfolioImage src={`assets/images/cura/${file}`} loading="lazy" decoding="async" alt={`Cura wireframe for ${label.toLowerCase()}`} /><figcaption>{label}</figcaption></figure>)}
+        {wireframes.map(([file, label]) => <figure key={file}><PortfolioImage src={`/assets/images/cura/${file}`} loading="lazy" decoding="async" alt={`Cura wireframe for ${label.toLowerCase()}`} /><figcaption>{label}</figcaption></figure>)}
       </div>
     </div>
   )
@@ -316,7 +316,7 @@ export function StateModel() {
         ))}
       </ol>
       <figure className="cura-state-screens" key={demo.file}>
-        <PortfolioImage src={`assets/images/cura/${demo.file}`} loading="lazy" decoding="async" alt={demo.alt} />
+        <PortfolioImage src={`/assets/images/cura/${demo.file}`} loading="lazy" decoding="async" alt={demo.alt} />
         <figcaption>{demo.note}</figcaption>
       </figure>
     </div>
@@ -340,12 +340,12 @@ export function Testing({ showIterations = true }) {
     <section className="cura-story-section cura-testing" id="cura-testing" aria-label="Testing">
       {showIterations ? <><div className="cura-before-after">
         <div className="cura-before-after-copy"><h3>The daily schedule became easier to read and act on.</h3><p>Progress bars were removed, the hidden swipe interaction became a visible tap control, and the time-window tabs gained stronger presence.</p></div>
-        <figure><span>Before</span><PortfolioImage src="assets/images/cura/Before.png" loading="lazy" decoding="async" alt="Cura daily schedule before usability-testing changes" /></figure>
-        <figure><span>After</span><PortfolioImage src="assets/images/cura/After.png" loading="lazy" decoding="async" alt="Cura daily schedule after usability-testing changes" /></figure>
+        <figure><span>Before</span><PortfolioImage src="/assets/images/cura/Before.png" loading="lazy" decoding="async" alt="Cura daily schedule before usability-testing changes" /></figure>
+        <figure><span>After</span><PortfolioImage src="/assets/images/cura/After.png" loading="lazy" decoding="async" alt="Cura daily schedule after usability-testing changes" /></figure>
       </div>
       <div className="cura-form-iteration">
         <div><h3>Medication entry changed from one long form to two focused forms.</h3><p>The task was divided so users no longer had to process all medication and scheduling fields at the same time.</p></div>
-        <figure><PortfolioImage src="assets/images/cura/iPhone 16 Pro - 59.png" loading="lazy" decoding="async" alt="Original Cura medication form with all fields combined" /><figcaption>Before · one continuous form</figcaption></figure>
+        <figure><PortfolioImage src="/assets/images/cura/iPhone 16 Pro - 59.png" loading="lazy" decoding="async" alt="Original Cura medication form with all fields combined" /><figcaption>Before · one continuous form</figcaption></figure>
         <ol><li><span>01</span><strong>Medication details</strong><p>Complete the first focused part of setup.</p></li><li><span>02</span><strong>Routine details</strong><p>Continue to the remaining schedule information.</p></li></ol>
       </div>
       </> : null}

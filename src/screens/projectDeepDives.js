@@ -1,17 +1,17 @@
 const forkastImage = (filename, label, alt) => ({
-  src: `assets/images/forkast/${filename}`,
+  src: `/assets/images/forkast/${filename}`,
   label,
   alt,
 })
 
 const projectImage = (project, filename, label, alt, preserveExtension = false) => ({
-  src: `assets/images/${project}/${project === 'cura' || preserveExtension ? filename : filename.replace(/\.png$/, '.jpg')}`,
+  src: `/assets/images/${project}/${project === 'cura' || preserveExtension ? filename : filename.replace(/\.png$/, '.jpg')}`,
   label,
   alt,
 })
 
 const researchImage = (filename, label, alt, href, credit) => ({
-  src: `assets/images/research/${filename}`,
+  src: `/assets/images/research/${filename}`,
   label,
   alt,
   href,
