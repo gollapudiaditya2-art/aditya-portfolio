@@ -1,0 +1,96 @@
+/* Shared corner language. Structural rules, full-bleed sections, and artwork stay unboxed. */
+
+/* Primary cards and navigation surfaces */
+.work-card,
+.pcard,
+.scard {
+  border-radius: var(--radius-card);
+}
+
+.case-placeholder,
+.case-closing,
+.case-deep-intro {
+  border-radius: var(--radius-panel);
+}
+
+.hero-grid-marker,
+.case-chapter-copy li::before {
+  border-radius: 50%;
+}
+
+.m-nav button.active .ml {
+  border-radius: var(--radius-compact);
+}
+
+.case-contents-track,
+.case-contents-indicator,
+.case-contents a,
+.work-meta span {
+  border-radius: var(--radius-pill);
+}
+
+.case-industrial .case-deep-intro { border-radius: 0 }
+
+/* Shared case-study panels */
+.case-four-questions,
+.case-context-grid,
+.case-meta,
+.case-detail-layout dl,
+.case-featured-grid .case-placeholder,
+.case-chapter-visuals .case-placeholder {
+  border-radius: var(--radius-panel);
+}
+
+.case-four-questions,
+.case-context-grid,
+.case-meta {
+  overflow: hidden;
+}
+
+.case-detail-layout dl {
+  padding-inline: clamp(18px,2vw,28px);
+  background: color-mix(in srgb,var(--surface) 58%,transparent);
+}
+
+/* Cura panels and grouped diagrams */
+.cura-raw-wall,
+.cura-raw-wall > article,
+.cura-raw-summary,
+.cura-concept-model,
+.cura-concept-model > article,
+.cura-persona-profile,
+.cura-empathy-map,
+.cura-journey-plot,
+.cura-swatches,
+.cura-type-sample,
+.cura-style-principles,
+.cura-flow-list > article,
+.cura-ia-root,
+.cura-ia-branches article,
+.cura-before-after figure,
+.cura-form-iteration figure,
+.cura-form-iteration ol {
+  border-radius: var(--radius-panel);
+}
+
+.cura-main-insight,
+.cura-raw-wall,
+.cura-concept-model,
+.cura-empathy-map,
+.cura-swatches,
+.cura-style-principles,
+.cura-form-iteration ol {
+  overflow: hidden;
+}
+
+.cura-raw-wall > article,
+.cura-raw-summary {
+  border-radius: var(--radius-compact);
+}
+
+@media(max-width:620px) {
+  .case-closing,
+  .case-deep-intro {
+    border-radius: 0;
+  }
+}

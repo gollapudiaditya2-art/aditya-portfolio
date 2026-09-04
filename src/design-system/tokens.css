@@ -1,0 +1,77 @@
+/* Permanent portfolio design tokens. */
+:root {
+  --color-neutral-0:#FFFFFF; --color-neutral-50:#F7F8FA; --color-neutral-200:#E7E9ED;
+  --color-neutral-250:#DDE0E6;
+  --color-neutral-500:#5D6572; --color-neutral-850:#23252B; --color-neutral-900:#17191F;
+  --color-blue-500:#3D4DFF; --color-blue-300:#A7AEFF; --color-olive-400:#A7A386; --color-forkast-green:#1B5E3F;
+  --color-disabled-bg:#D1D5DC; --color-disabled-text:#555D68;
+  --color-placeholder:#656D78; --color-violet-700:#5338B8; --color-accent-strong:#2635D6;
+  --color-green-600:#18794E; --color-green-100:#DDF3E8;
+  --color-amber-700:#855A00; --color-amber-100:#FFF0C2;
+  --color-red-600:#B42318; --color-red-100:#FDE3E1;
+
+  --color-bg-page:var(--color-neutral-200); --color-bg-surface:var(--color-neutral-0); --color-bg-inverse:var(--color-neutral-850);
+  --color-text-primary:var(--color-neutral-900); --color-text-secondary:var(--color-neutral-500); --color-text-inverse:var(--color-neutral-50);
+  --color-action:var(--color-blue-500); --color-action-on-dark:var(--color-blue-300); --color-focus:var(--color-blue-500);
+  --color-border-subtle:rgba(23,25,31,.14); --color-border-default:rgba(23,25,31,.32); --color-border-strong:var(--color-neutral-900);
+  --color-success:var(--color-green-600); --color-success-soft:var(--color-green-100);
+  --color-warning:var(--color-amber-700); --color-warning-soft:var(--color-amber-100);
+  --color-error:var(--color-red-600); --color-error-soft:var(--color-red-100);
+  --color-link:var(--color-action); --color-link-visited:var(--color-violet-700);
+  --color-media-scrim:rgba(23,25,31,.82);
+  --color-media-contrast-scrim:rgba(0,0,0,.58);
+  --color-text-inverse-muted:rgba(247,248,250,.78);
+
+  /* Compatibility aliases used by the existing site. */
+  --dark:var(--color-bg-inverse); --light:var(--color-text-inverse); --interaction-blue:var(--color-action);
+  --accent:var(--color-action); --accent-on-dark:var(--color-action-on-dark); --fk-green:var(--color-forkast-green);
+  --ground:var(--color-bg-page); --surface:var(--color-bg-surface); --olive:var(--color-olive-400);
+  --ink:var(--color-text-primary); --ink-dim:var(--color-text-secondary);
+
+  --font-display:"Bricolage Grotesque",system-ui,sans-serif; --font-body:"Onest",system-ui,sans-serif;
+  --font-meta:"Onest",system-ui,sans-serif;
+  --font-editorial:"Spectral",Georgia,serif; --font-hand:"Caveat",cursive;
+  /* Shared aliases now point to the approved portfolio typography. */
+  --disp:var(--font-display); --mono:var(--font-meta); --serif:var(--font-body);
+
+  /* Golden-ratio-led display scale with readable small-heading adjustments. */
+  --text-h1:4.5rem; --text-h2:2.8125rem; --text-h3:1.75rem;
+  --text-h4:1.0625rem; --text-h5:.9375rem; --text-h6:.875rem;
+  --text-body-lg:1.25rem; --text-body:1rem; --text-body-sm:.875rem; --text-meta:.75rem;
+  --leading-heading:.96; --leading-subheading:1.12; --leading-body:1.5; --leading-body-relaxed:1.6;
+  --tracking-display:-.04em; --tracking-heading:-.025em; --tracking-body:0; --tracking-meta:.08em;
+  --weight-regular:400; --weight-medium:500; --weight-semibold:600; --weight-bold:700;
+  --measure-body:68ch; --measure-heading:18ch;
+
+  /* 4px foundation and semantic spacing. */
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem;
+  --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --space-12:3rem; --space-16:4rem;
+  --space-20:5rem; --space-24:6rem; --space-32:8rem;
+  --space-inline-control:var(--space-5); --space-block-control:var(--space-3);
+  --space-stack-tight:var(--space-2); --space-stack-default:var(--space-4); --space-stack-loose:var(--space-6);
+  --space-component:var(--space-8); --space-section:clamp(var(--space-16),8vw,var(--space-32));
+  --space-page-gutter:clamp(var(--space-5),4.45vw,var(--space-16)); --gut:var(--space-16);
+
+  /* Full-width portfolio layout. Breakpoints: 640 / 768 / 1024px. */
+  --layout-columns:12; --layout-gap:var(--space-6); --layout-gap-wide:var(--space-8);
+  --layout-gutter-phone:var(--space-5); --layout-gutter-tablet:var(--space-10); --layout-gutter-desktop:var(--space-16);
+  --touch-target:44px;
+
+  /* Interface icon geometry. */
+  --icon-size-small:16px; --icon-size-default:20px; --icon-size-large:24px;
+  --icon-stroke:1.8; --icon-target:var(--touch-target);
+
+  /* Standard circular corners: every contained surface is visibly rounded. */
+  --radius-subtle:8px; --radius-compact:12px; --radius-panel:20px; --radius-card:28px; --radius-pill:999px;
+  --inset-card-control:16px; --inset-card-panel:8px; --inset-panel-control:8px; --inset-panel-detail:12px;
+
+  --border-hairline:1px; --border-focus:2px;
+  --shadow-control:0 2px 6px rgba(23,25,31,.22); --shadow-raised:0 12px 32px -20px rgba(23,25,31,.38); --shadow-floating:0 44px 100px -55px rgba(0,0,0,.45);
+  --duration-instant:80ms; --duration-fast:160ms; --duration-default:240ms; --duration-slow:400ms;
+  --ease-standard:cubic-bezier(.4,0,.2,1); --ease-out:cubic-bezier(.22,1,.36,1);
+
+  --z-base:0; --z-raised:10; --z-sticky:30; --z-floating:70; --z-header:80; --z-overlay:90; --z-tooltip:100;
+}
+
+@media(min-width:768px) { :root { --space-page-gutter:var(--layout-gutter-tablet) } }
+@media(min-width:1024px) { :root { --space-page-gutter:var(--layout-gutter-desktop) } }

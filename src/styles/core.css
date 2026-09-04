@@ -1,0 +1,136 @@
+/* Tokens, reset, global accessibility, fixed header, and page transition. */
+
+* { box-sizing: border-box; margin: 0; padding: 0 }
+
+html { scroll-behavior: smooth; height: 100%; overflow: hidden }
+
+body {
+  font-family: var(--disp); background: var(--ground); color: var(--ink); -webkit-font-smoothing: antialiased;
+  font-synthesis: none; overflow-x: hidden
+}
+
+a { color: inherit; text-decoration: none }
+
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer }
+
+.skip-link {
+  position: fixed; top: 10px; left: 50%; z-index: 110; min-height: 44px; padding: 11px 18px;
+  border-radius: 999px; background: var(--surface); color: var(--ink); font-weight: 700;
+  transform: translate(-50%,-160%); transition: transform .18s ease
+}
+
+.skip-link:focus,
+.skip-link.is-visible { transform: translate(-50%,0) }
+
+.page-content { min-height: 100% }
+
+.site-header {
+  position: fixed; inset: 0 0 auto; z-index: 80; height: 70px; pointer-events: none;
+  transition: color .24s cubic-bezier(.22,1,.36,1)
+}
+
+.site-header::before {
+  content: ""; position: absolute; inset: 0; background: rgba(231,233,237,.92);
+  border-bottom: 1px solid rgba(23,25,31,.1); opacity: 0;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  transition: opacity .24s cubic-bezier(.22,1,.36,1),background-color .24s cubic-bezier(.22,1,.36,1),
+    border-color .24s cubic-bezier(.22,1,.36,1)
+}
+
+.brand-home {
+  position: absolute; top: 18px; left: 28px; width: 34px; height: 34px; display: grid; place-items: center;
+  color: var(--ink); pointer-events: auto; transition: color .2s ease
+}
+
+.brand-mark {
+  display: block; width: 29px; height: 27px; background: currentColor;
+  -webkit-mask: url("/assets/brand/aditya-mark.svg") center / contain no-repeat;
+  mask: url("/assets/brand/aditya-mark.svg") center / contain no-repeat
+}
+
+body.menu-open .brand-home { color: var(--light); mix-blend-mode: normal }
+
+body.footer-in-view:not(.menu-open) .brand-home { color: var(--light) }
+
+body.footer-in-view:not(.menu-open) .site-header::before { opacity: 0 }
+
+body.menu-open .site-header::before { opacity: 0 }
+
+.floating-back-to-top {
+  position: fixed; right: clamp(18px,2.5vw,38px); bottom: max(clamp(18px,2.5vw,38px),env(safe-area-inset-bottom));
+  z-index: 70; display: inline-flex; align-items: center; gap: 16px; min-height: 48px; padding: 12px 16px 12px 18px;
+  border-radius: 999px; background: var(--interaction-blue); color: var(--light); box-shadow: 0 6px 8px rgba(23,25,31,.18);
+  font-size: 14px; font-weight: 650; letter-spacing: -.01em; opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(12px); transition: opacity .2s ease,transform .28s cubic-bezier(.22,1,.36,1),visibility 0s linear .28s
+}
+
+.floating-back-to-top.is-visible {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); transition-delay: 0s
+}
+
+.floating-back-to-top span:last-child { font-size: 18px; line-height: 1; transition: transform .25s cubic-bezier(.22,1,.36,1) }
+
+.floating-back-to-top:hover { transform: translateY(-2px) }
+
+.floating-back-to-top:hover span:last-child { transform: translateY(-3px) }
+
+.floating-back-to-top:focus-visible { outline-color: var(--light) }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px }
+
+body.menu-open .menubtn:focus-visible,
+.menu :focus-visible { outline-color: var(--accent-on-dark) }
+
+.screen { display: none; min-height: 100vh }
+
+.screen.active { display: block }
+
+.page-transition {
+  position: fixed; inset: 0; z-index: 90; overflow: hidden; pointer-events: none; contain: strict
+}
+
+.page-transition.is-active { pointer-events: auto }
+
+.page-transition-scribble {
+  position: absolute; top: -5.5%; left: -12%; display: block; width: 120%; height: 120%;
+  color: var(--interaction-blue)
+}
+
+.page-transition path {
+  fill: none; stroke: currentColor; stroke-width: 8%; stroke-linecap: round; stroke-linejoin: round
+}
+
+.page-transition-logo {
+  position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 9em; height: 2.5em;
+  color: var(--light); opacity: 0; transform: translate(-50%,-50%)
+}
+
+.page-transition-mark {
+  display: block; width: 48px; height: 45px; background: currentColor;
+  -webkit-mask: url("/assets/brand/aditya-mark.svg") center / contain no-repeat;
+  mask: url("/assets/brand/aditya-mark.svg") center / contain no-repeat;
+  animation: transition-wiggle .3s steps(2,end) infinite
+}
+
+@keyframes transition-wiggle {
+  from { transform: rotate(2deg) }
+  to { transform: rotate(-2deg) }
+}
+
+@media (max-width: 767px) {
+  .page-transition-scribble { width: 140%; left: -22% }
+
+  .floating-back-to-top { width: 48px; padding: 0; justify-content: center }
+
+  .floating-back-to-top span:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%) }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .skip-link { transition: none }
+
+  .floating-back-to-top,.floating-back-to-top span:last-child { transition: none }
+}
+
+:where(h1,h2,h3) { text-wrap: balance }
+
+:where(p,li,dd) { text-wrap: pretty }

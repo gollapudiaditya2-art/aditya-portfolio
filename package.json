@@ -1,0 +1,27 @@
+{
+  "name": "aditya-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/generate-static-routes.mjs",
+    "images:optimize": "node scripts/generate-responsive-images.mjs",
+    "images:dimensions": "node scripts/generate-image-dimensions.mjs",
+    "preview": "vite preview",
+    "test:secrets": "node scripts/scan-secrets.mjs",
+    "test:visual": "node scripts/verify-visual-regression.mjs",
+    "test:visual:update": "node scripts/verify-visual-regression.mjs --update",
+    "test:alignment": "node scripts/audit-media-alignment.mjs",
+    "test:contrast": "node scripts/verify-header-contrast.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "sharp": "^0.35.4",
+    "vite": "^8.1.4"
+  }
+}

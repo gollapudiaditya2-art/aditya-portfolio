@@ -1,0 +1,27 @@
+# Aditya Gollapudi
+
+> Portfolio of Aditya Gollapudi, an industrial and UX/UI designer working across physical objects, digital systems, research, and prototypes.
+
+Aditya is an industrial and UX/UI designer. This site presents independently completed design work, including research, interface design, prototyping, and usability testing.
+
+## Case Studies
+
+- [Forkast](https://adityagollapudi.com/work/forkast): A two-sided restaurant-allergy safety system connecting the diner-facing decision with the restaurant workflow needed to verify and execute it. Includes [full process](https://adityagollapudi.com/work/forkast/process) and [usability testing](https://adityagollapudi.com/work/forkast/testing).
+- [Cura](https://adityagollapudi.com/work/cura): A medication-routine concept focused on setup, daily dose status, late-dose recovery, and bounded caregiver support. Includes [full process](https://adityagollapudi.com/work/cura/process) and [usability testing](https://adityagollapudi.com/work/cura/testing).
+- [Aurio](https://adityagollapudi.com/work/aurio): A hearing-support wearable designed to be worn openly as expressive personal hardware.
+- [ARC](https://adityagollapudi.com/work/arc): A sculptural countertop coffee-machine concept developed through ritual research, sketching, physical models, CAD, CMF, and manufacturing studies.
+- [Bastion](https://adityagollapudi.com/work/bastion): A smart door system combining access, monitoring, communication, and a resilient physical-key fallback.
+
+## Sections
+
+- [Industrial Design](https://adityagollapudi.com/industrial-design): Product development from research through prototype.
+- [UX/UI Design](https://adityagollapudi.com/ux-ui): Case studies and shipped digital products spanning research, service systems, interface design, and prototyping.
+- [About](https://adityagollapudi.com/about): Background, front-end development experience, and education.
+- [Colophon](https://adityagollapudi.com/colophon): How this portfolio was designed and built.
+
+## Contact
+
+- Email: gollapudi.aditya71@gmail.com
+- LinkedIn: https://www.linkedin.com/in/gollapudiaditya/
+- Behance: https://www.behance.net/adityag2
+- GitHub: https://github.com/gollapudiaditya2-art

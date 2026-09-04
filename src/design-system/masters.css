@@ -1,0 +1,107 @@
+/* Standalone master components. These selectors do not depend on portfolio page CSS. */
+.master-back-control,.master-back-to-top {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:var(--touch-target);
+  width:fit-content; border-radius:var(--radius-pill); color:var(--color-text-primary);
+  font:var(--weight-semibold) var(--text-body-sm)/1 var(--font-body); text-decoration:none;
+  cursor:pointer; touch-action:manipulation;
+  transition:color var(--duration-fast) var(--ease-out),background-color var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)
+}
+.master-back-control { padding:var(--space-2) var(--space-4) var(--space-2) var(--space-3) }
+.master-back-control .ui-icon { width:var(--icon-size-small); height:var(--icon-size-small) }
+.master-back-to-top { padding:var(--space-3) var(--space-5); background:var(--color-action); color:var(--color-text-inverse) }
+.master-back-to-top.is-compact { width:var(--touch-target); padding:0 }
+.master-back-to-top.is-compact span { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%) }
+.master-back-control:focus-visible,.master-back-to-top:focus-visible { outline:var(--border-focus) solid var(--color-focus); outline-offset:4px }
+
+.master-metadata {
+  display:grid; grid-template-columns:repeat(var(--metadata-columns,4),minmax(0,1fr));
+  margin:0; border:var(--border-hairline) solid var(--color-border-default); border-radius:var(--radius-panel); overflow:hidden
+}
+.master-metadata>div { min-width:0; padding:var(--space-6) }
+.master-metadata>div+div { border-left:var(--border-hairline) solid var(--color-border-subtle) }
+.master-metadata dt {
+  color:var(--color-text-secondary); font:var(--weight-medium) var(--text-meta)/1.5 var(--font-body);
+  letter-spacing:var(--tracking-meta); text-transform:uppercase
+}
+.master-metadata dd { margin:var(--space-2) 0 0; font:var(--weight-medium) var(--text-body-sm)/1.5 var(--font-body); text-wrap:pretty }
+
+.master-progress-nav { max-width:100%; overflow-x:auto; scrollbar-width:thin }
+.master-progress-nav>div {
+  display:flex; width:max-content; min-width:100%; padding:var(--space-1); border-radius:var(--radius-pill); background:var(--color-neutral-250)
+}
+.master-progress-nav a,.master-progress-nav button {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:var(--touch-target);
+  padding:var(--space-3) var(--space-4); border-radius:var(--radius-pill); color:var(--color-text-primary);
+  font:var(--weight-semibold) var(--text-body-sm)/1 var(--font-body); text-decoration:none; white-space:nowrap; cursor:pointer
+}
+.master-progress-nav [aria-current] { background:var(--color-bg-surface); box-shadow:var(--shadow-raised) }
+.master-progress-nav a:focus-visible,.master-progress-nav button:focus-visible { outline:var(--border-focus) solid var(--color-focus); outline-offset:-2px }
+
+.master-capability-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--space-4) }
+.master-capability-card { min-height:360px; justify-content:space-between; box-shadow:var(--shadow-floating) }
+.master-capability-card>div { display:flex; flex-direction:column; gap:var(--space-6) }
+.master-capability-number {
+  font:var(--weight-semibold) var(--text-h2)/var(--leading-heading) var(--font-display); letter-spacing:var(--tracking-display)
+}
+.master-capability-card ul { display:grid; gap:var(--space-2); padding:0; list-style:none; font:var(--weight-medium) var(--text-body)/var(--leading-body) var(--font-body) }
+
+.master-project-card {
+  min-width:0; min-height:520px; overflow:hidden; border-radius:var(--radius-card);
+  background:var(--color-bg-inverse); color:var(--color-text-inverse); box-shadow:var(--shadow-floating)
+}
+.master-project-card>a,.master-project-card>button,.master-project-card>.master-project-card-static {
+  position:relative; display:grid; width:100%; height:100%; min-height:520px; overflow:hidden;
+  color:inherit; text-align:left; text-decoration:none; cursor:pointer
+}
+.master-project-card .master-media,.master-project-card .master-media img { position:absolute; inset:0; width:100%; height:100% }
+.master-project-card .master-media { margin:0; background:var(--color-bg-inverse) }
+.master-project-card .master-media img { display:block; object-fit:cover; transition:transform var(--duration-slow) var(--ease-out) }
+.master-project-card>a::after,.master-project-card>button::after,.master-project-card>.master-project-card-static::after {
+  content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 28%,var(--color-media-scrim) 100%); pointer-events:none
+}
+.master-project-card-copy { position:relative; z-index:1; align-self:end; display:grid; gap:var(--space-4); padding:var(--space-8) }
+.master-project-card-copy .type-body { color:var(--color-text-inverse) }
+.master-project-card-meta { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); font:var(--weight-medium) var(--text-body-sm)/1.4 var(--font-body) }
+.master-project-card-action { display:inline-flex; align-items:center; gap:var(--space-2); min-height:var(--touch-target); font:var(--weight-semibold) var(--text-body-sm)/1 var(--font-body) }
+.master-project-card-action .ui-icon { width:var(--icon-size-small); height:var(--icon-size-small); transition:transform var(--duration-fast) var(--ease-out) }
+.master-project-card>a:focus-visible,.master-project-card>button:focus-visible { outline:var(--border-focus) solid var(--color-action-on-dark); outline-offset:-4px }
+
+.master-overview-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--border-hairline); background:var(--color-border-subtle) }
+.master-overview-grid article { display:flex; flex-direction:column; gap:var(--space-4); min-height:160px; padding:var(--space-6); background:var(--color-bg-surface) }
+.master-overview-grid article .type-heading { color:var(--color-action) }
+
+.master-media { margin:0; min-width:0 }
+.master-media img {
+  display:block; width:100%; height:auto; max-height:calc(100svh - var(--space-16)); object-fit:contain; border-radius:var(--radius-compact)
+}
+.master-media figcaption { padding-top:var(--space-3); color:var(--color-text-secondary); font:var(--weight-regular) var(--text-meta)/1.45 var(--font-body) }
+
+@media(hover:hover) {
+  .master-back-control:hover { background:var(--color-text-primary); color:var(--color-text-inverse); transform:translateX(-2px) }
+  .master-back-to-top:hover { background:var(--color-text-primary); transform:translateY(-2px) }
+  .master-progress-nav a:not([aria-current]):hover,.master-progress-nav button:not([aria-current]):hover { background:var(--color-bg-surface) }
+  .master-project-card>a:hover .master-media img,.master-project-card>button:hover .master-media img { transform:scale(1.035) }
+  .master-project-card>a:hover .master-project-card-action .ui-icon,.master-project-card>button:hover .master-project-card-action .ui-icon { transform:translateX(4px) }
+}
+
+@media(max-width:1023px) {
+  .master-capability-grid { grid-template-columns:1fr }
+  .master-capability-card { min-height:300px }
+  .master-overview-grid { grid-template-columns:repeat(2,minmax(0,1fr)) }
+}
+
+@media(max-width:767px) {
+  .master-metadata { grid-template-columns:1fr }
+  .master-metadata>div+div { border-left:0; border-top:var(--border-hairline) solid var(--color-border-subtle) }
+}
+
+@media(max-width:520px) {
+  .master-overview-grid { grid-template-columns:1fr }
+  .master-project-card,.master-project-card>a,.master-project-card>button,.master-project-card>.master-project-card-static { min-height:480px }
+  .master-project-card-copy { padding:var(--space-6) }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .master-back-control,.master-back-to-top,.master-project-card .master-media img,.master-project-card-action .ui-icon { transition:none }
+  .master-back-control:hover,.master-back-to-top:hover,.master-project-card>a:hover .master-media img,.master-project-card>button:hover .master-media img,.master-project-card>a:hover .master-project-card-action .ui-icon,.master-project-card>button:hover .master-project-card-action .ui-icon { transform:none }
+}

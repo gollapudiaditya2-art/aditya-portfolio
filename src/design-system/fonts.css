@@ -1,0 +1,89 @@
+/* Locally hosted portfolio typefaces. */
+@font-face {
+  font-family:"Bricolage Grotesque";
+  src:url("/assets/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400 700;
+  font-stretch:75% 100%;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Onest";
+  src:url("/assets/fonts/onest-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Space Grotesk";
+  src:url("/assets/fonts/space-grotesk-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Space Mono";
+  src:url("/assets/fonts/space-mono-regular-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Space Mono";
+  src:url("/assets/fonts/space-mono-bold-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Spectral";
+  src:url("/assets/fonts/spectral-light-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:300;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Spectral";
+  src:url("/assets/fonts/spectral-regular-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Spectral";
+  src:url("/assets/fonts/spectral-medium-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Spectral";
+  src:url("/assets/fonts/spectral-light-italic-latin.woff2") format("woff2");
+  font-style:italic;
+  font-weight:300;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Spectral";
+  src:url("/assets/fonts/spectral-italic-latin.woff2") format("woff2");
+  font-style:italic;
+  font-weight:400;
+  font-display:swap;
+}
+
+@font-face {
+  font-family:"Caveat";
+  src:url("/assets/fonts/caveat-latin.woff2") format("woff2");
+  font-style:normal;
+  font-weight:600 700;
+  font-display:swap;
+}

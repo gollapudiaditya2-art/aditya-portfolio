@@ -1,0 +1,771 @@
+/* First approved migration pass: shared foundations only.
+   Original page structures and project-specific compositions remain unchanged. */
+
+body {
+  font-family: var(--font-body);
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+:where(p, li, dd) {
+  text-wrap: pretty;
+}
+
+:where(button, input, textarea, select) {
+  font-family: inherit;
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: var(--border-focus) solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.brand-home {
+  top: 13px;
+  left: 23px;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-primary);
+  box-shadow: none;
+  transition: none;
+}
+
+body.menu-open .brand-home,
+body.footer-in-view:not(.menu-open) .brand-home,
+body.brand-on-dark .brand-home {
+  background: transparent;
+  color: var(--color-text-inverse);
+}
+
+.menubtn {
+  top: 13px;
+  right: 20px;
+  min-height: var(--touch-target);
+  padding-inline: var(--space-4);
+  gap: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  box-shadow: inset 0 0 0 var(--border-hairline) var(--color-border-default);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0;
+  text-transform: none;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+body.menu-open .menubtn,
+body.footer-in-view:not(.menu-open) .menubtn {
+  background: transparent;
+  box-shadow: inset 0 0 0 var(--border-hairline) currentColor;
+}
+
+.m-nav :where(a, button) {
+  min-height: var(--touch-target);
+  font-family: var(--font-display);
+}
+
+.footer-group :where(a, button) {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding-block: var(--space-2);
+}
+
+.pcard {
+  text-align: left;
+}
+
+.m-nav :where(a, button).active .ml {
+  border-radius: var(--radius-pill);
+}
+
+.about-actions {
+  gap: var(--space-3);
+}
+
+.about-actions a,
+.case-project-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-3) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  letter-spacing: 0;
+  text-decoration: none;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.about-actions a:first-child {
+  background: var(--color-action);
+  color: var(--color-text-inverse);
+}
+
+.about-actions a:last-child,
+.case-project-back {
+  color: var(--color-text-primary);
+  box-shadow: inset 0 0 0 var(--border-hairline) var(--color-border-strong);
+}
+
+.about-actions a:hover {
+  gap: var(--space-2);
+  border-color: transparent;
+}
+
+.about-actions a:first-child:hover {
+  background: var(--color-text-primary);
+  color: var(--color-text-inverse);
+}
+
+.about-actions a:last-child:hover,
+.case-project-back:hover {
+  background: var(--color-text-primary);
+  color: var(--color-text-inverse);
+}
+
+.about-actions .ui-icon,
+.case-project-back .ui-icon {
+  width: var(--icon-size-small);
+  height: var(--icon-size-small);
+}
+
+.case-back-icon {
+  display: grid;
+  place-items: center;
+  width: var(--icon-size-small);
+  height: var(--icon-size-small);
+  border: 0;
+  border-radius: 0;
+}
+
+:where(.about-actions a, .case-project-back, .menubtn):active {
+  transform: translateY(1px) scale(.98);
+}
+
+:where(button, .ui-button)[disabled],
+:where(button, .ui-button)[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .menubtn:hover {
+    background: var(--color-text-primary);
+    color: var(--color-text-inverse);
+  }
+
+  body.menu-open .menubtn:hover,
+  body.footer-in-view:not(.menu-open) .menubtn:hover {
+    background: var(--color-text-inverse);
+    color: var(--color-text-primary);
+  }
+}
+
+@media (max-width: 767px) {
+  .brand-home {
+    left: 12px;
+  }
+
+  .menubtn {
+    right: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-home,
+  .menubtn,
+  .about-actions a,
+  .case-project-back {
+    transition: none;
+  }
+}
+.work-state,
+.pc-go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.work-state .ui-icon,
+.pc-go .ui-icon {
+  width: var(--icon-size-small);
+  height: var(--icon-size-small);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.footer-email .ui-icon {
+  width: var(--icon-size-default);
+  height: var(--icon-size-default);
+  color: var(--color-action-on-dark);
+}
+
+@media (hover: hover) {
+  .work-card:hover .work-state .ui-icon,
+  .pcard:hover .pc-go .ui-icon {
+    transform: translateX(3px) rotate(var(--icon-rotation, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-state .ui-icon,
+  .pc-go .ui-icon {
+    transition: none;
+  }
+}
+/* Complete approved typography roles.
+   These selectors intentionally outrank legacy page-level type declarations while
+   leaving the wordmark artwork and the Design System workshop specimens untouched. */
+
+.screen:not(.design-system) {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body-relaxed);
+}
+
+.screen:not(.design-system) h1:not(.hero-wordmark),
+.parallax-footer h1 {
+  max-width: var(--measure-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+.screen:not(.design-system) h2,
+.parallax-footer h2 {
+  max-width: var(--measure-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+.screen:not(.design-system) h3,
+.parallax-footer h3 {
+  max-width: var(--measure-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-subheading);
+  letter-spacing: var(--tracking-heading);
+  text-wrap: balance;
+}
+
+/* Full-bleed insight figures own their internal alignment. The global H3
+   reading measure otherwise pins the label to the left edge of the wider
+   quote track instead of centering it with the quote. */
+.screen:not(.design-system) .cura-main-insight h3 {
+  width: 100%;
+  max-width: none;
+  justify-self: stretch;
+  text-align: center;
+}
+
+.screen:not(.design-system) h4,
+.parallax-footer h4 {
+  max-width: var(--measure-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-subheading);
+  letter-spacing: var(--tracking-heading);
+  text-wrap: balance;
+}
+
+.screen:not(.design-system) h5,
+.parallax-footer h5 {
+  max-width: var(--measure-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-h5);
+  font-weight: var(--weight-semibold);
+  line-height: 1.25;
+  letter-spacing: .02em;
+  text-wrap: balance;
+}
+
+.screen:not(.design-system) h6,
+.parallax-footer h6 {
+  max-width: var(--measure-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-h6);
+  font-weight: var(--weight-medium);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.screen:not(.design-system) :where(p, li, dd),
+.parallax-footer :where(p, li, dd) {
+  max-width: var(--measure-body);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body-relaxed);
+  letter-spacing: var(--tracking-body);
+  text-wrap: pretty;
+}
+
+.screen:not(.design-system) :where(
+  .blurb,
+  .about-intro p,
+  .case-subtitle,
+  .case-mode-intro p,
+  .case-deep-intro p,
+  .case-heading p,
+  .case-closing p,
+  .personal-prologue p
+),
+.parallax-footer .footer-lead p {
+  max-width: var(--measure-body);
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+  text-wrap: pretty;
+}
+
+.screen:not(.design-system) :where(
+  figcaption,
+  .skill-item p,
+  .education-list p,
+  .tl-body p,
+  .case-chapter-copy li
+),
+.parallax-footer .footer-contact p {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+  text-wrap: pretty;
+}
+
+.screen:not(.design-system) :where(
+  dt,
+  time,
+  small,
+  .work-meta,
+  .work-state,
+  .pc-go,
+  .tl-role,
+  .case-meta dt,
+  .case-context-grid dt
+),
+.parallax-footer :where(.footer-base, .dino-game-message) {
+  font-family: var(--font-meta);
+  font-size: var(--text-meta);
+  font-weight: var(--weight-medium);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-meta);
+}
+
+.screen:not(.design-system) :where(
+  dt,
+  .work-state,
+  .tl-role,
+  .case-meta dt,
+  .case-context-grid dt
+) {
+  text-transform: uppercase;
+}
+
+@media (max-width: 520px) {
+  .screen:not(.design-system) h1:not(.hero-wordmark),
+  .parallax-footer h1 {
+    font-size: var(--text-h2);
+  }
+
+  .screen:not(.design-system) h2,
+  .parallax-footer h2 {
+    font-size: var(--text-h3);
+  }
+}
+/* Industrial project heroes intentionally keep a shared visual center even
+   when typography roles give each text element a different readable measure. */
+.case-industrial .case-hero-copy {
+  text-align: center;
+}
+
+.case-industrial .case-hero-copy :where(h1, .case-subtitle, .case-intro) {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Approved 4px spacing foundation and responsive page gutters. */
+:root {
+  --space-page-gutter: var(--layout-gutter-desktop);
+  --gut: var(--space-page-gutter);
+}
+
+.id-open {
+  padding: calc(70px + var(--space-20)) var(--gut) var(--space-10);
+}
+
+.ux-open {
+  padding-top: calc(70px + var(--space-20));
+  padding-bottom: var(--space-10);
+}
+
+.work-list {
+  gap: var(--space-6);
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-32);
+}
+
+.work-meta {
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+.work-meta span {
+  padding: var(--space-2) var(--space-3);
+}
+
+.work-state,
+.pc-go {
+  margin-top: var(--space-6);
+  gap: var(--space-2);
+}
+
+.wi-head,
+.pc-head {
+  padding-bottom: var(--space-8);
+}
+
+.proj-cards {
+  gap: var(--space-6);
+}
+
+.footer-lead p {
+  margin-top: var(--space-6);
+}
+
+.footer-directory {
+  margin-top: var(--space-12);
+  column-gap: var(--space-16);
+  row-gap: var(--space-10);
+}
+
+.footer-group h3 {
+  margin-bottom: var(--space-4);
+}
+
+.footer-contact p {
+  margin-top: var(--space-4);
+}
+
+.about-actions {
+  margin-top: var(--space-8);
+  gap: var(--space-3);
+}
+
+.about-facts {
+  margin-top: var(--space-2);
+}
+
+.skill-item {
+  gap: var(--space-6);
+  padding-block: var(--space-6);
+}
+
+.education-list h3 {
+  margin-top: var(--space-6);
+}
+
+.education-list p {
+  margin-top: var(--space-2);
+}
+
+.case-project-nav {
+  padding: calc(70px + var(--space-4)) var(--gut) 0;
+}
+
+.case-hero {
+  padding: var(--space-10) var(--gut) var(--space-12);
+  gap: var(--space-16);
+}
+
+.case-industrial .case-hero {
+  gap: var(--space-24);
+  padding-bottom: 0;
+}
+
+.case-hero-copy .case-subtitle {
+  margin-top: var(--space-8);
+}
+
+.case-hero-copy .case-intro {
+  margin-top: var(--space-6);
+}
+
+.case-meta dd,
+.case-context-grid dd {
+  margin-top: var(--space-2);
+}
+
+.case-detail-layout dl div {
+  padding-block: var(--space-5);
+}
+
+.case-four-questions {
+  margin-top: var(--space-8);
+}
+
+.case-contents-track {
+  padding: var(--space-1);
+}
+
+.case-contents-indicator {
+  top: var(--space-1);
+  bottom: var(--space-1);
+}
+
+.case-contents a {
+  padding: var(--space-3) var(--space-4);
+}
+
+.case-chapter-copy > p {
+  margin-top: var(--space-6);
+}
+
+.case-chapter-copy li {
+  padding: var(--space-3) 0 var(--space-3) var(--space-6);
+}
+
+.m-nav button {
+  transition: color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+.m-nav button .mn {
+  margin-right: var(--space-4);
+}
+
+.m-nav button:hover {
+  padding-left: 0;
+  transform: translateX(var(--space-4));
+}
+
+.m-nav button.active .ml {
+  padding-inline: var(--space-4);
+}
+
+.m-meta {
+  margin-top: var(--space-12);
+  gap: var(--space-16);
+}
+
+.m-col h4 {
+  margin-bottom: var(--space-4);
+}
+
+.m-col a {
+  padding-block: var(--space-1);
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+
+.m-col a:hover {
+  padding-left: 0;
+  transform: translateX(var(--space-2));
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --space-page-gutter: var(--layout-gutter-tablet);
+  }
+
+  .case-hero {
+    gap: var(--space-12);
+  }
+
+  .case-industrial .case-hero {
+    gap: var(--space-20);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --space-page-gutter: var(--layout-gutter-phone);
+  }
+
+  .id-open,
+  .ux-open {
+    padding-top: calc(70px + var(--space-12));
+    padding-bottom: var(--space-8);
+  }
+
+  .work-list {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-20);
+  }
+
+  .case-project-nav {
+    padding-top: calc(70px + var(--space-3));
+  }
+
+  .case-hero {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    gap: var(--space-10);
+  }
+
+  .case-industrial .case-hero {
+    gap: var(--space-16);
+    padding-bottom: 0;
+  }
+
+  .footer-directory {
+    row-gap: var(--space-8);
+  }
+}
+/* Final-detail composition: compact heading, then one level media/spec row. */
+.case-study .case-deep > .case-details {
+  margin-top: var(--space-20);
+  padding-top: var(--space-16);
+}
+
+.case-study .case-details > .case-heading {
+  width: 100%;
+  margin: 0 0 var(--space-8);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.case-study .case-details > .case-heading h2 {
+  width: min(100%, var(--measure-heading));
+  margin-inline: 0;
+}
+
+.case-study .case-details > .case-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.case-study .case-details .case-detail-layout > .case-asset {
+  align-self: start;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: auto;
+  grid-template-rows: auto auto;
+}
+
+.case-study .case-details .case-detail-layout > .case-asset img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.case-study .case-details .case-detail-layout > dl {
+  align-self: start;
+  display: block;
+  height: auto;
+  margin: 0;
+  padding: var(--space-4) var(--space-8);
+}
+
+.case-study .case-details .case-detail-layout > dl > div {
+  padding-block: var(--space-5);
+}
+
+@media (min-width: 861px) {
+  .case-industrial .case-details > .case-detail-layout {
+    align-items: stretch;
+    padding-bottom: var(--space-6);
+  }
+
+  .case-industrial .case-details .case-detail-layout > .case-asset {
+    position: relative;
+    display: block;
+    align-self: stretch;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .case-industrial .case-details .case-detail-layout > .case-asset img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case-industrial .case-details .case-detail-layout > .case-asset figcaption {
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+
+  .case-industrial .case-details .case-detail-layout > dl {
+    align-self: stretch;
+    height: auto;
+  }
+}
+
+@media (max-width: 1023px) {
+  .case-study .case-details > .case-detail-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr);
+    gap: var(--space-8);
+  }
+}
+
+@media (max-width: 860px) {
+  .case-study .case-deep > .case-details {
+    margin-top: var(--space-16);
+    padding-top: var(--space-12);
+  }
+
+  .case-study .case-details > .case-detail-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+/* Shared sticky-navigation clearance.
+   Section targets land below the progress pill instead of beneath it. */
+.case-quick,
+.case-context,
+.case-featured,
+.case-deep,
+.case-details,
+.cura-story-section {
+  scroll-margin-top: calc(70px + var(--space-8));
+}
+
+@media (max-width: 767px) {
+  .case-contents {
+    top: calc(70px + var(--space-2));
+  }
+
+  .case-quick,
+  .case-context,
+  .case-featured,
+  .case-deep,
+  .case-details,
+  .cura-story-section {
+    scroll-margin-top: calc(70px + var(--space-20));
+  }
+}

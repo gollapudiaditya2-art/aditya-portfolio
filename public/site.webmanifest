@@ -1,0 +1,16 @@
+{
+  "name": "Aditya Gollapudi — Design Portfolio",
+  "short_name": "Aditya Gollapudi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffefe",
+  "theme_color": "#fffefe",
+  "icons": [
+    {
+      "src": "/assets/brand/aditya-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
