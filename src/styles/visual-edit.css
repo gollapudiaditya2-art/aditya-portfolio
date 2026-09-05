@@ -35,9 +35,11 @@
 .visual-edit-skills li { padding:var(--space-2) var(--space-4); border-radius:var(--radius-pill); background:var(--color-bg-surface); box-shadow:inset 0 0 0 var(--border-hairline) var(--color-border-default); color:var(--color-text-secondary); font-family:var(--mono); font-size:11px; letter-spacing:.03em }
 
 .visual-edit-actions { display:flex; flex-wrap:wrap; gap:var(--space-3); margin:0 var(--gut); padding:var(--space-6) 0 var(--space-8) }
-.visual-edit-actions a { display:inline-flex; align-items:center; gap:var(--space-2); min-height:var(--touch-target); padding:var(--space-3) var(--space-5); border:0; border-radius:var(--radius-pill); background:var(--color-bg-surface); box-shadow:inset 0 0 0 var(--border-hairline) var(--color-border-default); color:var(--visual-ink); font:var(--weight-semibold) var(--text-body-sm)/1.2 var(--font-body); cursor:pointer }
-.visual-edit-actions a:hover { background:var(--visual-dark); color:var(--color-text-inverse) }
+.visual-edit-actions a { display:inline-flex; align-items:center; gap:var(--space-2); min-height:var(--touch-target); padding:var(--space-3) var(--space-5); border:0; border-radius:var(--radius-pill); background:var(--visual-dark); box-shadow:none; color:#fff; font:var(--weight-semibold) var(--text-body-sm)/1.2 var(--font-body); cursor:pointer }
+.visual-edit-actions a:hover { background:var(--visual-accent); color:#fff }
 .visual-edit-actions a:focus-visible { outline:var(--border-focus) solid var(--color-focus); outline-offset:4px }
+.visual-edit-actions a:nth-child(2) { background:transparent; box-shadow:inset 0 0 0 var(--border-hairline) var(--visual-dark); color:var(--visual-ink) }
+.visual-edit-actions a:nth-child(2):hover { background:var(--visual-dark); color:#fff }
 .visual-edit-actions svg { width:var(--icon-size-default); height:var(--icon-size-default); transition:transform var(--duration-fast) var(--ease-out) }
 .visual-edit-actions a:hover svg { transform:translateX(4px) }
 
