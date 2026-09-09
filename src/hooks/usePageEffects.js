@@ -223,6 +223,7 @@ export function usePageEffects(shellRef, activeScreen) {
       if (pathGeometryDirty) measureHomePath()
       const viewportHeight = shell.clientHeight
       const scrollTop = shell.scrollTop
+      document.body.classList.toggle('header-solid', scrollTop > 24)
       updateBrandTone()
 
       if (activeScreen === 'fork') {
@@ -336,6 +337,7 @@ export function usePageEffects(shellRef, activeScreen) {
       }
       document.body.classList.remove('footer-in-view')
       document.body.classList.remove('brand-on-dark')
+      document.body.classList.remove('header-solid')
       if (homePathMain) {
         homePathMain.style.removeProperty('stroke-dasharray')
         homePathMain.style.removeProperty('stroke-dashoffset')

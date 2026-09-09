@@ -73,7 +73,7 @@ try {
       const routeFindings = await evaluate(`(async () => {
         const shell = document.querySelector('#shell')
         const selectors = [
-          '.case-detail-layout', '.case-chapter-visuals', '.visual-edit-sketch-grid',
+          '.case-detail-layout', '.case-chapter-visuals', '.id-story-gallery', '.visual-edit-sketch-grid',
           '.visual-edit-wear-grid', '.visual-edit-making-grid', '.visual-edit-resolution-grid',
           '.visual-edit-service-grid', '.personal-gallery'
         ]

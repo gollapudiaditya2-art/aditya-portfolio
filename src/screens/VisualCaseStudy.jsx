@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { ArrowIcon } from '../design-system/index.js'
 import { PortfolioImage } from '../components/PortfolioImage.jsx'
 import { routePath } from '../routes.js'
@@ -104,6 +104,47 @@ function Source({ href, children }) {
 
 const Head = ({ title, copy, className = '' }) => <div className={`visual-edit-section-head ${className}`}><h2>{title}</h2><p>{copy}</p></div>
 
+const forkastWaypoints = [
+  ['forkast-wp-problem', 'Problem'],
+  ['forkast-wp-research', 'Research'],
+  ['forkast-wp-decisions', 'Decisions'],
+  ['forkast-wp-system', 'System'],
+  ['forkast-wp-testing', 'Testing'],
+]
+
+function ProcessProgressRail({ waypoints }) {
+  const [activeId, setActiveId] = useState(waypoints[0][0])
+
+  useEffect(() => {
+    const targets = waypoints.map(([id]) => document.getElementById(id)).filter(Boolean)
+    if (targets.length === 0) return undefined
+    let scroller = targets[0].parentElement
+    while (scroller && getComputedStyle(scroller).overflowY !== 'auto' && getComputedStyle(scroller).overflowY !== 'scroll') {
+      scroller = scroller.parentElement
+    }
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting)
+      if (visible.length === 0) return
+      const topmost = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b))
+      setActiveId(topmost.target.id)
+    }, { root: scroller || null, rootMargin: '-15% 0px -70% 0px', threshold: 0 })
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [waypoints])
+
+  const goTo = (id) => {
+    const target = document.getElementById(id)
+    if (!target) return
+    target.scrollIntoView({ behavior: 'auto', block: 'start' })
+  }
+
+  return <nav className="forkast-progress-rail" aria-label="Jump to section">
+    <div className="forkast-progress-rail-track">
+      {waypoints.map(([id, label]) => <button key={id} type="button" className={id === activeId ? 'is-active' : ''} aria-current={id === activeId ? 'true' : undefined} onClick={() => goTo(id)}>{label}</button>)}
+    </div>
+  </nav>
+}
+
 function PairedList({ contributions, learnings }) {
   return <section className="forkast-summary-pairs">
     <Head className="forkast-pairs-head forkast-pairs-head-contrib" title="Contributions" copy={contributions.copy} />
@@ -170,10 +211,26 @@ const forkastLearnings = [
 ]
 
 const forkastRetrospective = [
-  ['The trade-offs', 'Routing every question through the waiter first, instead of letting diners message the chef directly, is slower in the best case, but it keeps the kitchen from being interrupted mid-service. Treating allergen severity as restaurant-owned evidence instead of a diner self-declaration adds friction to onboarding, in exchange for data a chef can actually act on. And letting a kitchen say a dish simply can’t be made safe, instead of forcing every request into a substitution, means the app sometimes has no good answer, which is more honest than pretending it does.'],
-  ['The uncomfortable conversation', 'Presenting the first version to a real waiter and chef was uncomfortable before a single word of feedback came back. The look on their faces said the design had blown up a kitchen flow that already worked. The chef pushed harder than expected, asking directly why questions should route to them at all when the waiter already had the answers. There wasn’t a clean answer in the moment, and that discomfort is what forced the redesign: staff communication had to stay inside the kitchen’s existing flow, with the chef only pulled in when the waiter genuinely couldn’t answer.'],
-  ['The wrong turn', 'An earlier direction routed customer questions straight to the chef, cutting the waiter out of the loop entirely. Tested with real waiters and kitchen staff in a mock restaurant setup, it broke down during a busy, regular-flow service: the kitchen got too busy, questions ended up going back through the waiter anyway, and the flow added time instead of saving it. That failure led to interviews with the waiter, chef, and junior chef, and shaped the current design: staff communication stays inside the kitchen’s existing flow instead of replacing it.'],
-  ['What I’d do differently today', 'I’d design from the kitchen outward instead of from the diner in. The process started with the customer-facing menu and worked backward into restaurant operations, which is part of why the first kitchen-facing direction landed as a disruption. Starting with the system the kitchen already runs on (paper tickets and staff memory) would make the eventual customer experience something the kitchen absorbs instead of reacts to.'],
+  {
+    title: 'The trade-offs',
+    hook: 'Every trade-off above trades speed for trust.',
+    body: 'Waiter-first routing, restaurant-owned severity, and an honest “no safe answer” all cost something up front: a slower handoff, more onboarding friction, a request the app sometimes can’t fulfill. None of them look efficient on their own. Together, they’re what makes the system something a kitchen can actually run on, instead of something that just looks good in a deck.',
+  },
+  {
+    title: 'The uncomfortable conversation',
+    hook: 'A real chef asked why he needed to be involved at all, and I didn’t have a clean answer.',
+    body: 'Presenting the first version to a real waiter and chef was uncomfortable before a single word of feedback came back. The look on their faces said the design had blown up a kitchen flow that already worked. That discomfort is what forced the redesign: staff communication stays inside the kitchen’s existing flow, with the chef pulled in only when the waiter genuinely can’t answer.',
+  },
+  {
+    title: 'The wrong turn',
+    hook: 'Routing customers straight to the chef looked faster on paper. It broke down in a mock service test.',
+    body: 'Cutting the waiter out of the loop seemed efficient, but tested with real waiters and kitchen staff, the kitchen got too busy, questions ended up going back through the waiter anyway, and the flow added time instead of saving it. That failure shaped the current design: staff communication stays inside the kitchen’s existing flow instead of replacing it.',
+  },
+  {
+    title: 'What I’d do differently today',
+    hook: 'I’d start with the kitchen, not the diner.',
+    body: 'The process began with the customer-facing menu and worked backward into restaurant operations, which is part of why the first kitchen-facing direction landed as a disruption. Starting with the system the kitchen already runs on, paper tickets and staff memory, would make the eventual customer experience something the kitchen absorbs instead of reacts to.',
+  },
 ]
 
 function ForkastVisualEdit({ go }) {
@@ -211,38 +268,37 @@ function ForkastVisualProcess({ go }) {
   return <section className="screen case-study visual-edit visual-edit--forkast active" id="s-ux-forkast-process">
     <Back to="ux-forkast-visual" go={go} />
     <Hero title="Forkast" subtitle="A two-sided allergy verification system." intro="The original 30-page case study, rebuilt for the web in the same order, using project evidence, diagrams, interfaces, and shorter explanations." src={`${FS}device-composition.png`} alt="Forkast shown as one connected mobile product, from personalized menu to allergen setup" theme="forkast" meta={[["Role", "Independent UX/UI designer"], ["Research", "Six-week mixed-method study"], ["System", "Customer + restaurant"], ["Year", "2025"]]} />
+    <ProcessProgressRail waypoints={forkastWaypoints} />
     <main className="visual-edit-body forkast-pdf-story">
-      <section className="infographic-section forkast-story-start"><Head title="The system, at a glance." copy="Four role-specific products read and update one allergy-and-dish record in real time." /><ForkastSystemAtGlance /></section>
-
-      <section className="infographic-section forkast-research-scale"><Head title="The scale of the problem." copy="Restaurant allergy decisions affect millions, yet confidence and communication remain low." /><ForkastScaleGraphic /><p className="forkast-source-note">Research sources documented in the case study: FARE, JAMA Network Open, and FAACT.</p></section>
+      <section id="forkast-wp-problem" className="infographic-section forkast-research-scale"><Head title="The scale of the problem." copy="Restaurant allergy decisions affect millions, yet confidence and communication remain low." /><ForkastScaleGraphic /><p className="forkast-source-note">Research sources documented in the case study: FARE, JAMA Network Open, and FAACT.</p></section>
       <section className="infographic-section"><Head title="Eating out is a cost-benefit calculation." copy="Today, allergic diners choose between time-consuming verification and the risk of skipping it." /><ForkastCostMap /></section>
       <section className="infographic-section"><Head title="A layered research roadmap." copy="Six methods built on one another; observation, not another interview, produced the biggest shift." /><ForkastResearchRoadmap /></section>
       <section className="infographic-section"><Head title="What users said and what they actually did." copy="Interview confidence collapsed in an unplanned, hungry walk-in. That behavioral gap became the central design problem." /><ForkastVoicesAndObservation /></section>
       <section className="infographic-section"><Head title="Where existing apps break down." copy="Customer tools do not reach kitchens; restaurant tools do not reach diners. None preserve a shared live record." /><ForkastCompetitiveMatrix /></section>
       <section className="infographic-section"><Head title="An evening out with an allergy." copy="The customer journey shows the verification burden, the hunger-driven shortcut, and the uncertainty that survives the meal." /><ForkastCustomerJourney /><SourcedEvidence src={`${R}forkast-diner-waiter.jpg`} alt="Customers reviewing a menu with a waiter at a restaurant table" width="1800" height="1200" href="https://www.pexels.com/photo/waiter-taking-orders-from-customers-4921150/" credit="RDNE Stock project on Pexels" /></section>
       <section className="infographic-section"><Head title="How the restaurant actually handles allergies." copy="The waiter owns the conversation while the kitchen works through paper tickets, memory, and limited peak-service capacity." /><div className="infographic-composite infographic-composite--research"><ForkastOperationsMap /><SourcedEvidence src={`${R}forkast-kitchen-team.jpg`} alt="Professional chefs coordinating during restaurant service" width="1799" height="1200" href="https://www.pexels.com/photo/professional-chefs-working-in-restaurant-kitchen-30120987/" credit="Tranmautritam on Pexels" /></div></section>
+      <section id="forkast-wp-research" className="infographic-section"><Head title="Five insight clusters from research." copy="The evidence converged around verification cost, trust, time, stale information, and restaurant capacity." /><ForkastInsightClusters /></section>
 
-      <section className="infographic-section"><Head title="Five insight clusters from research." copy="The evidence converged around verification cost, trust, time, stale information, and restaurant capacity." /><ForkastInsightClusters /></section>
       <section className="infographic-section"><Head title="Who the system is designed for." copy="Two customer patterns and two restaurant roles expose both sides of the same safety decision." /><ForkastPersonaMap /></section>
       <section className="infographic-section"><Head title="What the design must achieve." copy="Five criteria became the test for every later interface and service decision." /><ForkastSuccessCriteria /></section>
       <section className="infographic-section"><Head title="An allergy order through the restaurant." copy="The waiter’s confidence and the chef’s capacity rise and fall at different moments during the same order." /><ForkastRestaurantJourney /></section>
+      <section className="infographic-section"><Head title="The real opportunity." copy="Those criteria and that journey point at one gap: what the customer already knows never reaches what the restaurant can verify and safely execute." /><ForkastOpportunityMap /></section>
+      <section id="forkast-wp-decisions" className="infographic-section"><Head title="Three approaches considered. Two rejected." copy="Closing that gap could be built three different ways. Two of them still left the gap standing." /><ForkastDirectionDecision /></section>
+      <section className="infographic-section"><Head title="What research changed about the design." copy="Choosing the two-sided system was the easy part. What it actually needed only became clear once real restaurant behavior pushed back on the first version." /><ForkastResearchPivot /></section>
+      <section className="infographic-section"><Head title="Three decisions, three rejected alternatives." copy="Three of those shifts came with a real cost, each chosen deliberately over an easier alternative." /><ForkastTradeoffs /></section>
 
-      <section className="infographic-section"><Head title="The real opportunity." copy="Connect what the customer already knows with what the restaurant can verify and safely execute." /><ForkastOpportunityMap /></section>
-      <section className="infographic-section"><Head title="Three approaches considered. Two rejected." copy="The research ruled out customer-only discovery and restaurant-only compliance. The gap required a two-sided system." /><ForkastDirectionDecision /></section>
+      <section id="forkast-wp-system" className="infographic-section forkast-story-start"><Head title="What those decisions became." copy="Four role-specific products read and update one allergy-and-dish record in real time." /><ForkastSystemAtGlance /></section>
       <section className="infographic-section"><Head title="Three states, four roles, one shared truth." copy="Safe, Caution, and Avoid remain consistent while each role receives the level of detail needed to act." /><ForkastRiskModel /><EvidenceGallery items={forkastRiskEvidence} className="evidence-phone-grid" /><EvidenceGallery items={[{ src: `${FS}customer-safety-composition.png`, alt: 'Forkast Safe, Caution, and Avoid states shown together with substitution guidance', label: 'One safety record · four operational views' }]} className="evidence-system-overview" /></section>
-      <section className="infographic-section"><Head title="What research changed about the design." copy="Question routing, reusable answers, and capacity profiles were added only after the restaurant workflow was understood." /><ForkastResearchPivot /></section>
-
       <section className="visual-edit-section forkast-wireframe-section"><Head title="From sketches to system." copy="Low-fidelity flows established allergen setup, menu evidence, staff questions, and kitchen escalation before visual styling." /><div className="forkast-wireframe-field"><Visual src={`${F}01-wireframe-menu.png`} alt="Low-fidelity Forkast customer menu" label="Customer menu" /><Visual src={`${F}02-wireframe-dish.png`} alt="Low-fidelity Forkast dish detail" label="Dish evidence" /><Visual src={`${F}03-wireframe-dashboard.png`} alt="Low-fidelity Forkast waiter dashboard" label="Waiter floor" /><Visual src={`${F}04-wireframe-dashboard-2.png`} alt="Low-fidelity Forkast chef dashboard" label="Chef escalation" /></div></section>
       <section className="visual-edit-section"><Head title="Design-system foundations." copy="Semantic safety colors, one component library, and role-aware density let the same decision travel across mobile, tablet, and kitchen displays." /><div className="forkast-design-evidence"><div className="forkast-component-catalog"><article><span className="is-safe">Safe</span><strong>Dish status</strong><p>Evidence checked against the diner’s allergy profile.</p></article><article><span className="is-caution">Caution</span><strong>Review required</strong><p>Cross-contact or substitution details need attention.</p></article><article><span className="is-avoid">Avoid</span><strong>Ordering locked</strong><p>The kitchen cannot verify a safe version of the dish.</p></article><article><span className="is-action">Ask</span><strong>Shared question</strong><p>One question record moves through the service team.</p></article><small>Reusable status and control catalog</small></div><div className="forkast-token-board"><div><span>Safe</span><i style={{ background: '#1b5e3f' }} /></div><div><span>Caution</span><i style={{ background: '#d49118' }} /></div><div><span>Avoid</span><i style={{ background: '#a63b32' }} /></div><div><span>Action</span><i style={{ background: '#3fc6ef' }} /></div><p>One semantic palette across customer, waiter, chef, and line views.</p></div></div></section>
       <section className="infographic-section"><Head title="Three user flows show how the system works." copy="The customer path, chef decision path, and customer → waiter → chef escalation preserve context from question to answer." /><ForkastUserFlows /><EvidenceGallery items={forkastFlowEvidence} className="evidence-flow-grid" /></section>
       <section className="visual-edit-section"><Head title="The customer experience." copy="Scan, set allergens, browse a filtered menu, inspect evidence, and order, or ask the kitchen." /><div className="visual-edit-phone-sequence">{['05-set-allergens.png', '06-menu-safe.png', '07-dish-safe.png', '08-dish-caution.png', '09-empty-state.png'].map((file, index) => <Visual key={file} src={`${F}${file}`} alt={`Forkast customer flow screen ${index + 1}`} label={['Profile', 'Menu', 'Safe', 'Caution', 'Ask / reroute'][index]} />)}</div></section>
       <section className="visual-edit-section"><Head title="The restaurant experience." copy="The floor, chef, and line views reveal different operational detail while reading from the same shared record." /><div className="visual-edit-service-grid"><Visual src={`${F}12-server-section.png`} alt="Forkast waiter floor dashboard" label="Waiter floor · questions and tables" /><Visual src={`${F}14-chef-escalations.png`} alt="Forkast chef escalation dashboard" label="Chef · edge-case decisions" /><Visual src={`${F}13-kitchen-line-display.png`} alt="Forkast kitchen line display" label="Line · allergen flags on every ticket" /></div></section>
 
-      <section className="infographic-section"><Head title="What testing exposed." copy="Usability testing changed hierarchy, routing, state distinction, and the chef’s decision controls." /><ForkastTestingFindings /></section>
+      <section id="forkast-wp-testing" className="infographic-section"><Head title="What testing exposed." copy="Usability testing changed hierarchy, routing, state distinction, and the chef’s decision controls." /><ForkastTestingFindings /></section>
+      <section className="infographic-section forkast-learning-section"><Head title="What the case study doesn’t usually show." copy="None of those three decisions survived contact with a real kitchen cleanly. Here’s what actually forced them." /><div className="forkast-pair-standalone-list">{forkastRetrospective.map((item, index) => <article key={item.title} className="forkast-pair-item forkast-pair-learning"><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p><strong>{item.hook}</strong> {item.body}</p></article>)}</div></section>
       <section className="infographic-section"><Head title="How the system is structured." copy="Customer and restaurant surfaces remain separate at the interface level and connected at the safety-data level." /><ForkastInformationArchitecture /></section>
-      <section className="infographic-section"><Head title="Three decisions, three rejected alternatives." copy="The chosen system respects service roles, treats severity as evidence, and permits honest rejection when a kitchen cannot guarantee safety." /><ForkastTradeoffs /></section>
       <section className="infographic-section"><Head title="What success would look like." copy="These are transparent projections from the case-study model, not shipped metrics or measured outcomes." /><ForkastOutcomeEstimates /></section>
-      <section className="infographic-section forkast-learning-section"><Head title="What the case study doesn’t usually show." copy="The trade-offs made, the conversation that forced a redesign, the direction that failed with real staff, and what a restart would change." /><div className="forkast-pair-standalone-list">{forkastRetrospective.map(([title, copy], index) => <article key={title} className="forkast-pair-item forkast-pair-learning"><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
       <section className="infographic-section forkast-learning-section"><Head title="Learnings, reflection, and what comes next." copy="The project’s strongest lesson is about behavior and restaurant systems, not interface polish." /><ForkastLearningMap /></section>
       <section className="visual-edit-close"><h2>The project is the handoff.</h2><p>Forkast succeeds only when one evidence-backed decision survives the journey from the diner’s phone to the kitchen and returns without losing context.</p></section>
     </main>

@@ -500,7 +500,7 @@
   gap: var(--space-2)
 }
 
-.case-arc .case-chapter.arc-sketch-gallery .case-chapter-visuals { grid-template-columns: repeat(6,minmax(0,1fr)) }
+.case-arc .case-chapter.arc-sketch-gallery .case-chapter-visuals { grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--space-6) }
 
 .case-arc .case-chapter.arc-model-one-gallery .case-chapter-visuals { grid-template-columns: repeat(2,minmax(0,1fr)) }
 
@@ -822,3 +822,31 @@
 @media(prefers-reduced-motion:reduce) {
   .case-contents-indicator { transition: none }
 }
+
+/* Sharper, higher-contrast reading pass for the industrial-design case studies
+   (Aurio, ARC, Bastion) only. Body copy previously ran on --ink-dim, which sits
+   near the AA floor against --ground; bumping it to full ink and lifting the
+   bullet size makes the page skimmable instead of soft-grey. */
+.case-industrial .case-intro,
+.case-industrial .case-heading p,
+.case-industrial .case-mode-intro p,
+.case-industrial .case-deep-intro p,
+.case-industrial .case-context .case-heading p,
+.case-industrial .case-chapter-copy>p {
+  color: var(--ink)
+}
+
+.case-industrial .case-chapter-copy li {
+  font-size: clamp(15px,1.15vw,17px)
+}
+
+.case-industrial .case-closing p { color: rgba(255,255,255,.94) }
+
+/* Keep industrial reading controls below the persistent site header. */
+.case-industrial .case-contents { top: 82px; width: calc(100% - var(--gut) - var(--gut)); margin-inline: var(--gut); padding-left: 0 }
+.case-industrial .case-chapter,
+.case-industrial .case-details,
+.case-industrial .case-quick,
+.case-industrial .case-deep { scroll-margin-top: 152px }
+.case-industrial .case-hero { scroll-margin-top: 82px }
+.case-industrial .case-asset img { border-radius: 0 }

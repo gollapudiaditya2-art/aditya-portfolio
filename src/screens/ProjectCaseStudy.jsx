@@ -1,8 +1,4 @@
-import { projectDeepDives } from './projectDeepDives.js'
-import { CaseProgressNav } from '../components/CaseProgressNav.jsx'
-import { PortfolioImage } from '../components/PortfolioImage.jsx'
-import { routePath } from '../routes.js'
-import { ArrowIcon } from '../design-system/index.js'
+import { IndustrialProjectStory } from './IndustrialProjectStory.jsx'
 
 const projects = {
   aurio: {
@@ -10,7 +6,7 @@ const projects = {
     subtitle: 'Lifestyle hearing support for young adults.',
     intro: 'A hearing wearable designed to feel expressive, socially legible, and easy to use when listening becomes difficult.',
     accent: '#b95636',
-    heroVisual: { src: '/assets/images/aurio/Untitled (1) 1.jpg', label: 'Aurio final product system', alt: 'Two resolved Aurio hearing-support devices shown together in a studio render' },
+    heroVisual: { src: '/assets/images/aurio/Untitled4 2.jpg', label: 'Aurio shown on the ear', alt: 'Aurio ring-form hearing-support concept shown on a head model to explain placement and scale' },
     overviewVisual: { src: '/assets/images/aurio/Untitled6 (1) 1.jpg', label: 'Aurio color and form system', alt: 'Six Aurio hearing-support devices showing the final ring form and color options' },
     quick: [
       ['What', 'A lifestyle hearing-support wearable with direct controls, focus feedback, six colorways, and a charging case.'],
@@ -90,7 +86,7 @@ const projects = {
     subtitle: 'A coffee machine designed for slow mornings.',
     intro: 'A sculptural countertop appliance bringing a calmer ritual, clear interaction, and serviceable construction into a compact triangular form.',
     accent: '#74795c',
-    heroVisual: { src: '/assets/images/arc/COFFEE.51.1.jpg', label: 'ARC final product', alt: 'Green triangular ARC coffee machine in a dark studio render' },
+    heroVisual: { src: '/assets/images/arc/COFFEE1.59.jpg', label: 'ARC with a cup beneath the brewing head', alt: 'Green triangular ARC coffee-machine concept with a mug in its central brewing opening' },
     overviewVisual: { src: '/assets/images/arc/COFFEE1.54.jpg', label: 'ARC product family', alt: 'Green and peach ARC coffee machines displayed together on white plinths' },
     quick: [
       ['What', 'A sculptural rounded-triangle coffee machine organized around a clear morning preparation and brewing sequence.'],
@@ -127,125 +123,6 @@ const projects = {
   },
 }
 
-function VisualPlaceholder({ label, variant = 'wide' }) {
-  return <figure className={`case-placeholder ${variant}`}><div className="case-placeholder-mark" aria-hidden="true"><span></span><span></span></div><figcaption>{label}</figcaption></figure>
-}
-
-function CaseAsset({ visual, variant = 'wide' }) {
-  const isHero = variant === 'hero'
-  return <figure className={`case-asset ${variant}`}><PortfolioImage src={visual.src} loading={isHero ? 'eager' : 'lazy'} fetchPriority={isHero ? 'high' : 'auto'} decoding="async" alt={visual.alt} /><figcaption>{visual.label}{visual.href ? <> · <a href={visual.href} target="_blank" rel="noreferrer">{visual.credit}</a></> : null}</figcaption></figure>
-}
-
-function CaseVisual({ visual, label, variant }) {
-  return visual ? <CaseAsset visual={visual} variant={variant} /> : <VisualPlaceholder label={label} variant={variant} />
-}
-
-function DeepDiveChapter({ chapter }) {
-  return (
-    <article className={`case-chapter${chapter.visuals.length ? '' : ' no-visuals'}${chapter.layout ? ` ${chapter.layout}` : ''}`}>
-      <div className="case-chapter-copy">
-        <h3>{chapter.title}</h3>
-        <p>{chapter.copy}</p>
-        <ul>{chapter.points.map((point) => <li key={point}>{point}</li>)}</ul>
-      </div>
-      <div className={`case-chapter-visuals visual-count-${chapter.visuals.length}${chapter.visuals.length > 2 ? ' has-featured' : ''}`}>
-        {chapter.visuals.map((visual, index) => <CaseVisual key={visual.src ?? visual} visual={typeof visual === 'string' ? undefined : visual} label={typeof visual === 'string' ? visual : undefined} variant={index === 0 && chapter.visuals.length > 2 ? 'landscape' : 'square'} />)}
-      </div>
-    </article>
-  )
-}
-
-function FeaturedScreens({ project }) {
-  if (!project.featuredScreens) return null
-
-  return (
-    <section className="case-section case-featured" id={`${project.id}-key-screens`} aria-labelledby={`${project.id}-key-screens-title`}>
-      <div className="case-heading">
-        <h2 id={`${project.id}-key-screens-title`}>{project.featuredTitle}</h2>
-        <p>{project.featuredIntro}</p>
-      </div>
-      <div className="case-featured-grid">
-        {project.featuredScreens.map((screen) => (
-          <CaseVisual
-            key={screen.visual?.src ?? screen.label}
-            visual={screen.visual}
-            label={screen.label}
-            variant={screen.variant}
-          />
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function ProjectCaseStudy({ project, go }) {
-  const isIndustrial = project.parent === 'id-index'
-  const isIndustrialPeer = project.id === 'arc' || project.id === 'bastion'
-  const progressItems = [
-    { id: `${project.id}-quick`, label: 'Overview' },
-    ...(project.ownership ? [{ id: `${project.id}-context`, label: 'Role' }] : []),
-    ...(project.featuredScreens ? [{ id: `${project.id}-key-screens`, label: 'Key screens' }] : []),
-    { id: `${project.id}-full-case-study`, label: 'Full case study' },
-  ]
-
-  return (
-    <section className={`screen case-study case-${project.id}${isIndustrial ? ' case-industrial' : ''}${isIndustrialPeer ? ' case-industrial-peer' : ''} active`} id={`s-${project.parent.startsWith('id') ? 'id' : 'ux'}-${project.id}`} style={{ '--case-accent': project.accent }}>
-      <div className="case-project-nav">
-        <a className="case-project-back" href={routePath(project.parent)} onClick={(event) => go(project.parent, event)}>
-          <span className="case-back-icon" aria-hidden="true"><ArrowIcon direction="left" /></span>
-          <span>Back</span>
-        </a>
-      </div>
-      <header className="case-hero">
-        <div className="case-hero-copy"><h1>{project.title}</h1><p className="case-subtitle">{project.subtitle}</p><p className="case-intro">{project.intro}</p></div>
-        <CaseVisual visual={project.heroVisual} label={project.heroLabel} variant="hero" />
-      </header>
-      <dl className="case-meta">{project.meta.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-      <CaseProgressNav label={`${project.title} case study sections`} items={progressItems} />
-      <main className="case-body">
-        <section className="case-quick" id={`${project.id}-quick`} aria-labelledby={`${project.id}-quick-title`}>
-          <div className="case-mode-intro">
-            <h2 id={`${project.id}-quick-title`}>The 30-second version.</h2>
-            <p>Four questions explain the complete project before the detailed process begins.</p>
-          </div>
-          <div className="case-four-questions" aria-label="What, why, who, and how">
-            {project.quick.map(([question, answer]) => <article key={question}><h3>{question}</h3><p>{answer}</p></article>)}
-          </div>
-          <CaseVisual visual={project.overviewVisual} label="Final solution overview" variant="panorama" />
-        </section>
-
-        {project.ownership ? (
-          <section className="case-section case-context" id={`${project.id}-context`} aria-labelledby={`${project.id}-context-title`}>
-            <div className="case-heading">
-              <h2 id={`${project.id}-context-title`}>Role, scope, and ownership.</h2>
-              <div className="case-ownership-copy">{project.ownership.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
-            </div>
-            <dl className="case-context-grid">{project.meta.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-          </section>
-        ) : null}
-
-        <FeaturedScreens project={project} />
-
-        <section className="case-deep" id={`${project.id}-full-case-study`} aria-labelledby={`${project.id}-full-title`}>
-          <header className="case-deep-intro">
-            <h2 id={`${project.id}-full-title`}>The full case study.</h2>
-            <p>{project.fullIntro ?? 'Research, synthesis, sketches, prototypes, testing, iterations, final design, and technical resolution.'}</p>
-          </header>
-          <div className="case-chapters">{projectDeepDives[project.id].map((chapter) => <DeepDiveChapter key={chapter.title} chapter={chapter} />)}</div>
-          <section className="case-section case-details">
-            <div className="case-heading"><h2>{project.detailTitle}</h2></div>
-            <div className="case-detail-layout"><CaseVisual visual={project.detailVisual} label="Final detail, exploded view, or interface states" variant="landscape" /><dl>{project.details.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div>
-          </section>
-          <section className="case-closing">
-            <h2>{project.closingTitle}</h2>
-            <p>{project.closing}</p>
-          </section>
-        </section>
-      </main>
-    </section>
-  )
-}
-
-export function AurioCaseStudy({ go }) { return <ProjectCaseStudy project={projects.aurio} go={go} /> }
-export function BastionScreen({ go }) { return <ProjectCaseStudy project={projects.bastion} go={go} /> }
-export function ArcScreen({ go }) { return <ProjectCaseStudy project={projects.arc} go={go} /> }
+export function AurioCaseStudy({ go }) { return <IndustrialProjectStory project={projects.aurio} go={go} /> }
+export function BastionScreen({ go }) { return <IndustrialProjectStory project={projects.bastion} go={go} /> }
+export function ArcScreen({ go }) { return <IndustrialProjectStory project={projects.arc} go={go} /> }

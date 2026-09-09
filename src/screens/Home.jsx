@@ -81,14 +81,16 @@ export function HomeScreen({ go }) {
               <span className="sc-action">View UX/UI projects <ArrowIcon /></span>
             </div>
           </a>
-          <a className="scard c3" href={routePath('ux-index')} onClick={(event) => go('ux-index', event)} style={{ "--i": 2 }}>
+          <article className="scard c3" style={{ "--i": 2 }}>
             <div className="sc-no">3.</div>
             <div className="sc-body">
               <h3>Prototype &amp; Build</h3>
-              <ul><li>Claude Code</li><li>Codex</li><li>Figma Make</li><li>Nano Banana</li><li>Lovable</li><li>Antigravity</li><li>Stitch</li></ul>
-              <span className="sc-action">View digital projects <ArrowIcon /></span>
+              <div className="sc-build-groups">
+                <div><h4>Physical</h4><ul><li>Physical models</li><li>3D printing</li><li>Foam &amp; cardboard mockups</li><li>CNC fabrication</li><li>Scale modeling</li></ul><a className="sc-action" href={routePath('id-index')} onClick={(event) => go('id-index', event)}>Physical work <ArrowIcon /></a></div>
+                <div><h4>Digital</h4><ul><li>Claude Code</li><li>Codex</li><li>Figma Make</li><li>Nano Banana</li><li>Lovable</li><li>Antigravity</li><li>Stitch</li></ul><a className="sc-action" href={routePath('ux-index')} onClick={(event) => go('ux-index', event)}>Digital work <ArrowIcon /></a></div>
+              </div>
             </div>
-          </a>
+          </article>
         </div>
       </section>
     

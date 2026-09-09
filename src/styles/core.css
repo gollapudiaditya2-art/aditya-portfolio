@@ -52,6 +52,8 @@ body.menu-open .brand-home { color: var(--light); mix-blend-mode: normal }
 
 body.footer-in-view:not(.menu-open) .brand-home { color: var(--light) }
 
+body.header-solid .site-header::before { opacity: 1 }
+
 body.footer-in-view:not(.menu-open) .site-header::before { opacity: 0 }
 
 body.menu-open .site-header::before { opacity: 0 }

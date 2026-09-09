@@ -32,7 +32,8 @@
 .master-progress-nav a,.master-progress-nav button {
   display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:var(--touch-target);
   padding:var(--space-3) var(--space-4); border-radius:var(--radius-pill); color:var(--color-text-primary);
-  font:var(--weight-semibold) var(--text-body-sm)/1 var(--font-body); text-decoration:none; white-space:nowrap; cursor:pointer
+  font:var(--weight-semibold) var(--text-body-sm)/1 var(--font-body); text-decoration:none; white-space:nowrap; cursor:pointer;
+  transition:background-color var(--duration-default) var(--ease-out),box-shadow var(--duration-default) var(--ease-out)
 }
 .master-progress-nav [aria-current] { background:var(--color-bg-surface); box-shadow:var(--shadow-raised) }
 .master-progress-nav a:focus-visible,.master-progress-nav button:focus-visible { outline:var(--border-focus) solid var(--color-focus); outline-offset:-2px }
@@ -102,6 +103,6 @@
 }
 
 @media(prefers-reduced-motion:reduce) {
-  .master-back-control,.master-back-to-top,.master-project-card .master-media img,.master-project-card-action .ui-icon { transition:none }
+  .master-back-control,.master-back-to-top,.master-project-card .master-media img,.master-project-card-action .ui-icon,.master-progress-nav a,.master-progress-nav button { transition:none }
   .master-back-control:hover,.master-back-to-top:hover,.master-project-card>a:hover .master-media img,.master-project-card>button:hover .master-media img,.master-project-card>a:hover .master-project-card-action .ui-icon,.master-project-card>button:hover .master-project-card-action .ui-icon { transform:none }
 }

@@ -31,11 +31,11 @@ export const projectDeepDives = {
     {
       title: 'Market study and product benchmarking',
       layout: 'aurio-media-grid equal-height-benchmark-media',
-      copy: 'Existing products split into two worlds. Hearing aids offered support but carried a clinical signal. Earbuds felt socially normal but were not designed around hearing difficulty. Many users moved between both depending on context.',
-      points: ['Compared major hearing-aid form factors', 'Mapped products by visibility and lifestyle fit', 'Studied earbuds as the socially accepted reference', 'Identified outdoor use as a weak point across categories'],
+      copy: 'The benchmark compares audio products by their primary purpose and the effort needed to control them. It frames an opportunity for hearing-first support with simple, direct interaction.',
+      points: ['Compared hearing-aid form factors', 'Mapped entertainment and hearing-first products', 'Compared manual and automatic interaction', 'Used the map to frame a design opportunity'],
       visuals: [
         projectImage('aurio', 'image 5.png', 'Hearing-aid form factors', 'Comparison chart of six common hearing-aid form factors'),
-        projectImage('aurio', 'image 6.png', 'Aurio market benchmark', 'Market map comparing hearing aids, earbuds, and Aurio by lifestyle fit and hearing support'),
+        projectImage('aurio', 'image 6.png', 'Hearing support and interaction friction', 'Benchmark map comparing audio products by interaction friction and entertainment versus hearing-first use'),
       ],
     },
     {
@@ -50,7 +50,7 @@ export const projectDeepDives = {
     {
       title: 'Sketching broadly before selecting a form',
       layout: 'aurio-media-grid aurio-sketch-grid',
-      copy: 'The exploration covered roughly one hundred pages of concepts. Ring, loop, earbud, clip, and behind-ear directions were compared for how clearly they communicated support and how naturally they sat on the body.',
+      copy: 'Ring, loop, earbud, clip, and behind-ear directions explored different ways to attach the device and make it visible. The selected sheets show alternatives in body position, silhouette, and control placement.',
       points: ['Explored attachment and weight distribution', 'Tested how much of the product should remain visible', 'Separated battery, microphone, and interaction zones', 'Combined bold, comfortable, and communicative elements'],
       visuals: [
         projectImage('aurio', 'Slide 16_9 - 82.png', 'Concept sketch exploration one', 'First broad sheet of Aurio hearing-wearable concept sketches', true),
@@ -84,19 +84,19 @@ export const projectDeepDives = {
       ],
     },
     {
-      title: 'Prototype build and wear validation',
+      title: 'Finishing the wearable prototype',
       layout: 'aurio-media-grid aurio-process-grid',
-      copy: 'A resolved prototype was built to check the assembled form, scale, interaction zones, and how it looked when worn in an everyday setting.',
-      points: ['Built the ring and body as a complete assembly', 'Checked reach to the tap control', 'Observed the device from conversational distance', 'Used wear testing to verify the final proportions'],
+      copy: 'The physical prototype moved through hand finishing and paint preparation before the final wear studies. These models demonstrate form, scale, and appearance; acoustic performance remains a separate next step.',
+      points: ['Hand-finished prototype components', 'Prepared and painted the surfaces', 'Documented the final form on the ear'],
       visuals: [
         projectImage('aurio', 'image 57.png', 'Prototype finishing', 'Designer hand-finishing a small Aurio prototype component'),
         projectImage('aurio', 'image 58.png', 'Prototype paint preparation', 'Designer spray-finishing Aurio prototype parts'),
         projectImage('aurio', 'image 59.png', 'Prototype surface finishing', 'Aurio prototype components being painted in a workshop booth'),
-        projectImage('aurio', 'image 60.png', 'Control prototype', 'Blue 3D-printed Aurio tactile-control test piece'),
-        projectImage('aurio', 'image 61.png', 'Button geometry test', 'Black Aurio control prototype testing two raised tactile buttons'),
-        projectImage('aurio', 'image 62.png', 'Control mold study', 'Black dual-control prototype mounted for finishing'),
-        projectImage('aurio', 'image 63.png', 'Control iteration', 'Refined dual-control prototype after surface finishing'),
-        projectImage('aurio', 'image 64.png', 'Final control surface', 'Finished Aurio control surface with two circular tactile zones'),
+        projectImage('aurio', 'image 60.png', 'Control model study', 'Blue physical model with recessed control features'),
+        projectImage('aurio', 'image 61.png', 'Control geometry study', 'Black physical model with two circular control features'),
+        projectImage('aurio', 'image 62.png', 'Surface preparation', 'Black control model mounted on a board for finishing'),
+        projectImage('aurio', 'image 63.png', 'Surface iteration', 'Control model showing a later surface-finishing stage'),
+        projectImage('aurio', 'image 64.png', 'Finished surface study', 'Finished black model with two circular control zones'),
       ],
     },
     {
@@ -132,9 +132,9 @@ export const projectDeepDives = {
       ],
     },
     {
-      title: 'Physical grip prototyping',
+      title: 'Testing the handle at full scale',
       layout: 'full-media equal-height-grip-media',
-      copy: 'Handle shapes were tested at full scale to compare reach, leverage, clearance, and comfort. This step grounded the technology concept in the repeated physical action of opening a door.',
+      copy: 'Full-scale models brought the concept back to the hand: the grip, the turning action, and clearance against a mounted surface. The photographs show the physical comparisons behind the final handle; they do not establish a measured ergonomic improvement.',
       points: ['Compared grip profiles', 'Checked hand clearance from the door', 'Tested lever length and rotation', 'Refined front and rear ergonomics together'],
       visuals: [
         projectImage('bastion', 'WhatsApp Image 2025-03-14 at 18.00.27_97664882 1.png', 'Grip prototype family', 'Row of full-scale black Bastion handle prototypes used to compare grip profiles'),
@@ -211,13 +211,14 @@ export const projectDeepDives = {
       ],
     },
     {
-      title: 'Sketching the triangular identity',
+      title: 'From separate volumes to a continuous triangle',
       layout: 'full-media arc-sketch-gallery',
-      copy: 'Early sketches explored how a rounded triangle could organize the reservoir, brewing head, controls, cup area, and drip tray while maintaining a compact footprint.',
+      copy: 'Cylindrical, rectangular, and triangular concepts explored how the brewing head, tank, and cup opening could share one body. The rounded triangle became the direction carried into physical models.',
       points: ['Explored front and side silhouettes', 'Tested open and enclosed cup zones', 'Studied control placement', 'Refined the triangle into softer continuous surfaces'],
-      visuals: Array.from({ length: 20 }, (_, index) => {
-        const number = String(index + 1).padStart(2, '0')
-        return projectImage('arc', `arc-sketch-${number}.png`, `Concept sketch ${number}`, `ARC coffee-machine concept sketch ${index + 1} exploring form, proportions, and component layout`, true)
+      visuals: Array.from({ length: 20 }, (_, offset) => {
+        const index = offset + 1
+        const number = String(index).padStart(2, '0')
+        return projectImage('arc', `arc-sketch-${number}.png`, `Form exploration ${number}`, `ARC coffee-machine concept sketch ${index} exploring form, proportions, and component layout`, true)
       }),
     },
     {
@@ -233,7 +234,7 @@ export const projectDeepDives = {
       ],
     },
     {
-      title: 'Model two refinement',
+      title: 'From a volume model to removable parts',
       layout: 'arc-model-two-gallery',
       copy: 'The second model refined the proportions and interaction zones before testing. The updated build clarified the cup opening, brewing head, front control, and removable side reservoir.',
       points: ['Improved cup and drip-tray access', 'Clarified button placement', 'Refined the brewing-head relationship', 'Made the side reservoir removable'],

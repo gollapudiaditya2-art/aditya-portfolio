@@ -1,6 +1,7 @@
+import { ProgressNav } from '../design-system/index.js'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-export function CaseProgressNav({ label, items }) {
+export function CaseProgressNav({ label, items, appearance = 'case' }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const navRef = useRef(null)
   const indicatorRef = useRef(null)
@@ -72,12 +73,12 @@ export function CaseProgressNav({ label, items }) {
   useLayoutEffect(() => {
     const nav = navRef.current
     const indicator = indicatorRef.current
-    const activeLink = linkRefs.current[activeIndex]
-    if (!nav || !indicator || !activeLink) return undefined
+    const activeLink = linkRefs.current[activeIndex] ?? nav?.querySelectorAll('a')[activeIndex]
+    if (!nav || !activeLink) return undefined
 
     const updateIndicator = () => {
-      indicator.style.width = `${activeLink.offsetWidth}px`
-      indicator.style.transform = `translate3d(${activeLink.offsetLeft}px,0,0)`
+      if (indicator) indicator.style.width = `${activeLink.offsetWidth}px`
+      if (indicator) indicator.style.transform = `translate3d(${activeLink.offsetLeft}px,0,0)`
 
       const targetLeft = activeLink.offsetLeft - (nav.clientWidth - activeLink.offsetWidth) / 2
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -89,7 +90,7 @@ export function CaseProgressNav({ label, items }) {
     updateIndicator()
     window.addEventListener('resize', updateIndicator)
     return () => window.removeEventListener('resize', updateIndicator)
-  }, [activeIndex, sectionKey])
+  }, [activeIndex, sectionKey, appearance])
 
   const handleClick = (event, id, index) => {
     const target = document.getElementById(id)
@@ -106,6 +107,10 @@ export function CaseProgressNav({ label, items }) {
       () => releaseProgrammaticRef.current(),
       reducedMotion ? 0 : 180,
     )
+  }
+
+  if (appearance === 'master') {
+    return <ProgressNav ref={navRef} className="case-contents id-story-progress" label={label} items={items.map((item) => ({...item, href: `#${item.id}`}))} activeId={items[activeIndex]?.id} onSelect={(item,event) => handleClick(event,item.id,items.findIndex(candidate => candidate.id === item.id))} />
   }
 
   return (

@@ -286,6 +286,8 @@ Full-bleed sections, structural grids, table cells, comparison rails, and unboxe
 
 **The Containment Earns Rounding Rule.** Round a boundary only when it encloses a discrete object. Do not add radius to a full-width band, a divider-led evidence structure, or an image itself.
 
+**Exception — Industrial Design story pages.** The ARC, Aurio, and Bastion project-story pages (`src/screens/IndustrialProjectStory.jsx`, styled by `src/styles/industrial-story.css`) round their gallery and hero images at the compact `12px` corner. This is a deliberate departure from the rule above, scoped to that one shared template: the deep, dense photo/sketch galleries on those pages read better as discrete rounded objects than as unboxed edge-to-edge imagery. It does not apply to Forkast, Cura, or the older `case-study.css` industrial pages, which keep images square.
+
 ## Components
 
 ### Buttons
@@ -343,6 +345,12 @@ The round comparison is a deep-blue, edge-to-edge three-column band with ruled s
 ### Cura Findings Matrix
 
 Four findings pair the observed round-one behavior with the exact interface change and only the result the retained record supports. The desktop matrix uses three ruled columns headed `Observed`, `Changed`, and `Result`. At `620px` and below, each finding stacks vertically and repeats those labels in action blue; the header disappears, but no relationship or evidence qualifier does.
+
+### Industrial Project Stories
+
+ARC, Aurio, and Bastion inherit the portfolio's Bricolage Grotesque / Onest typography, cool ground, dark ink, blue navigation and focus, and full-width gutters. The object leads the split hero; a paired brief and contribution establishes ownership before the physical development. Ruled chapter boundaries, grouped full sketch galleries, and paired model columns organize the original work without adding shadows. Per the Shapes section's documented exception, hero and gallery images round at the compact `12px` corner; captions and full-resolution image links keep the artifacts inspectable.
+
+The shared six-part navigation supports distinct project sequences: ARC moves from sketch families and two cardboard stages through use, internal arrangement, construction, and material/context views; Aurio moves from attachment forms and ring placement through finishing, control studies, the proposed system, and final wear photographs; Bastion connects the prototype family and hand studies to installation, companion interactions, assembly, and final finishes. At phone widths, the hero, brief, model comparison, and major image pairs stack; sketches and compact interaction galleries retain two columns. Preserve every original chapter image. These compositions belong to the industrial surface; its [surface brief](.impeccable/surfaces/src-screens-industrialprojectstory-jsx.md) holds the content and evidence constraints.
 
 ## Do's and Don'ts
 
