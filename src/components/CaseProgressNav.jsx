@@ -77,10 +77,17 @@ export function CaseProgressNav({ label, items, appearance = 'case' }) {
     if (!nav || !activeLink) return undefined
 
     const updateIndicator = () => {
-      if (indicator) indicator.style.width = `${activeLink.offsetWidth}px`
-      if (indicator) indicator.style.transform = `translate3d(${activeLink.offsetLeft}px,0,0)`
+      const linkWidth = activeLink.offsetWidth
+      const linkOffset = activeLink.offsetLeft
+      const linkLeft = activeLink.getBoundingClientRect().left
+      const navLeft = nav.getBoundingClientRect().left
+      const targetLeft = linkLeft - navLeft + nav.scrollLeft - (nav.clientWidth - linkWidth) / 2
 
-      const targetLeft = activeLink.offsetLeft - (nav.clientWidth - activeLink.offsetWidth) / 2
+      if (indicator) {
+        indicator.style.width = `${linkWidth}px`
+        indicator.style.transform = `translate3d(${linkOffset}px,0,0)`
+      }
+
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       if (nav.scrollWidth > nav.clientWidth + 1) {
         nav.scrollTo({ left: Math.max(0, targetLeft), behavior: reducedMotion ? 'auto' : 'smooth' })
@@ -110,7 +117,17 @@ export function CaseProgressNav({ label, items, appearance = 'case' }) {
   }
 
   if (appearance === 'master') {
-    return <ProgressNav ref={navRef} className="case-contents id-story-progress" label={label} items={items.map((item) => ({...item, href: `#${item.id}`}))} activeId={items[activeIndex]?.id} onSelect={(item,event) => handleClick(event,item.id,items.findIndex(candidate => candidate.id === item.id))} />
+    return (
+      <ProgressNav
+        ref={navRef}
+        className="case-contents id-story-progress"
+        label={label}
+        items={items.map((item) => ({ ...item, href: `#${item.id}` }))}
+        activeId={items[activeIndex]?.id}
+        indicator={<span className="id-story-progress-indicator" ref={indicatorRef} aria-hidden="true" />}
+        onSelect={(item, event) => handleClick(event, item.id, items.findIndex((candidate) => candidate.id === item.id))}
+      />
+    )
   }
 
   return (

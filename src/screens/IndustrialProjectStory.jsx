@@ -1,3 +1,4 @@
+import { getImageDimensions } from '../content/imageDimensions.js'
 import { PortfolioImage } from '../components/PortfolioImage.jsx'
 import { CaseProgressNav } from '../components/CaseProgressNav.jsx'
 import { BackControl, Heading, MediaFrame, MetadataList, Text, TextLink } from '../design-system/index.js'
@@ -5,7 +6,19 @@ import { routePath } from '../routes.js'
 import { projectDeepDives } from './projectDeepDives.js'
 
 function Image({ visual, eager = false }) {
-  return <MediaFrame mode="full-bleed" className="id-story-image"><a href={visual.src} target="_blank" rel="noreferrer" aria-label={`Open full image: ${visual.label}`}><PortfolioImage src={visual.src} alt={visual.alt} loading={eager ? 'eager' : 'lazy'} decoding="async" /></a></MediaFrame>
+  const { width, height } = getImageDimensions(visual.src)
+  return (
+    <MediaFrame mode="full-bleed" className="id-story-image" style={{ '--image-ratio': width / height }}>
+      <a href={visual.src} target="_blank" rel="noreferrer" aria-label={`Open full image: ${visual.label}`}>
+        <PortfolioImage
+          src={visual.src}
+          alt={visual.alt}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      </a>
+    </MediaFrame>
+  )
 }
 
 function Gallery({ visuals, kind = '', eager = false }) {

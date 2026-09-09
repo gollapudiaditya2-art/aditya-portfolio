@@ -64,12 +64,13 @@ export function MetadataList({ items = [], columns = 4, className = '', ...props
   )
 }
 
-export function ProgressNav({ items = [], activeId, onSelect, label = 'Page sections', className = '', ...props }) {
+export function ProgressNav({ items = [], activeId, onSelect, indicator, label = 'Page sections', className = '', ...props }) {
   if (!items.length) return null
 
   return (
     <nav className={classes('master-progress-nav', className)} aria-label={label} {...props}>
       <div>
+        {indicator}
         {items.map((item) => {
           const active = item.id === activeId
           const content = <>{item.number ? <span>{item.number}</span> : null}{item.label}</>
