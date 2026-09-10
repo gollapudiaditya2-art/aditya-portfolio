@@ -1,51 +1,27 @@
+import { useCaptureImages } from './hooks/useCaptureImages.js'
+import { scrollSurface } from './scrollSurface.js'
+import { useMenuScroll } from './hooks/useMenuScroll.js'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Menu } from './components/Menu.jsx'
 import { PageTransition } from './components/PageTransition.jsx'
 import { FloatingBackToTop } from './components/FloatingBackToTop.jsx'
 import { useCardStack } from './hooks/useCardStack.js'
 import { usePageEffects } from './hooks/usePageEffects.js'
-import { HomeScreen } from './screens/Home.jsx'
-import { AboutScreen } from './screens/About.jsx'
-import { ColophonScreen } from './screens/Colophon.jsx'
-import { NotFoundScreen } from './screens/NotFound.jsx'
-import { IndustrialIndexScreen } from './screens/IndustrialIndex.jsx'
-import { UxIndexScreen } from './screens/UxIndex.jsx'
-import { CuraTestingReport, CuraVisualEdit, CuraVisualProcess, ForkastTestingReport, ForkastVisualEdit, ForkastVisualProcess } from './screens/VisualCaseStudy.jsx'
-import { ArcScreen, AurioCaseStudy as AurioScreen, BastionScreen } from './screens/ProjectCaseStudy.jsx'
+import { screens } from './screens/index.js'
 import { isUnmodifiedPrimaryClick, routePath, screenFromLocation, SCREEN_META } from './routes.js'
-
-const screens = {
-  fork: HomeScreen,
-  about: AboutScreen,
-  colophon: ColophonScreen,
-  'id-index': IndustrialIndexScreen,
-  'id-aurio': AurioScreen,
-  'id-arc': ArcScreen,
-  'id-bastion': BastionScreen,
-  'ux-index': UxIndexScreen,
-  'ux-forkast-visual': ForkastVisualEdit,
-  'ux-forkast-process': ForkastVisualProcess,
-  'ux-forkast-testing': ForkastTestingReport,
-  'ux-cura-visual': CuraVisualEdit,
-  'ux-cura-process': CuraVisualProcess,
-  'ux-cura-testing': CuraTestingReport,
-  'not-found': NotFoundScreen,
-}
-
-const initialScreen = screenFromLocation()
 
 const updateMeta = (selector, attribute, value) => {
   const element = document.querySelector(selector)
   if (element) element.setAttribute(attribute, value)
 }
 
-export function App() {
-  const [activeScreen, setActiveScreen] = useState(initialScreen)
+export function App({ screen } = {}) {
+  const [activeScreen, setActiveScreen] = useState(() => screen ?? (typeof window === 'undefined' ? 'fork' : screenFromLocation()))
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSkipLinkVisible, setIsSkipLinkVisible] = useState(false)
   const shellRef = useRef(null)
   const menuButtonRef = useRef(null)
-  const activeScreenRef = useRef(initialScreen)
+  const activeScreenRef = useRef(activeScreen)
   const transitionOverlayRef = useRef(null)
   const transitionPathRef = useRef(null)
   const transitionPromiseRef = useRef(null)
@@ -61,7 +37,7 @@ export function App() {
     if (historyMode !== 'none') window.history[`${historyMode}State`](null, '', routePath(screenId))
     requestAnimationFrame(() => {
       const shell = shellRef.current
-      shell?.scrollTo({ top: 0 })
+      scrollSurface(shell)?.scrollTo({ top: 0, behavior: 'instant' })
       const heading = shell?.querySelector('.screen.active h1')
       if (heading) {
         heading.tabIndex = -1
@@ -75,7 +51,7 @@ export function App() {
     event?.preventDefault()
     if (!screens[screenId]) return Promise.resolve(false)
     if (screenId === activeScreenRef.current) {
-      shellRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+      scrollSurface(shellRef.current)?.scrollTo({ top: 0, behavior: 'smooth' })
       return Promise.resolve(false)
     }
     if (transitionPromiseRef.current) return transitionPromiseRef.current
@@ -127,10 +103,7 @@ export function App() {
     requestAnimationFrame(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' }))
   }, [closeMenu, go])
 
-  useEffect(() => {
-    document.body.classList.toggle('menu-open', isMenuOpen)
-    return () => document.body.classList.remove('menu-open')
-  }, [isMenuOpen])
+  useMenuScroll(shellRef, isMenuOpen)
 
   useEffect(() => {
     const [title, description, image] = SCREEN_META[activeScreen]
@@ -157,7 +130,7 @@ export function App() {
 
   useEffect(() => {
     if (window.location.hash && screens[window.location.hash.slice(1)]) {
-      window.history.replaceState(null, '', routePath(initialScreen))
+      window.history.replaceState(null, '', routePath(activeScreenRef.current))
     }
     const handlePopState = () => {
       const nextScreen = screenFromLocation()
@@ -175,6 +148,7 @@ export function App() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [closeMenu, isMenuOpen])
 
+  useCaptureImages(activeScreen)
   useCardStack(shellRef, activeScreen)
   usePageEffects(shellRef, activeScreen)
   const ActiveScreen = screens[activeScreen]

@@ -31,3 +31,6 @@ skills-lock.json
 
 # Local Netlify folder
 .netlify
+
+# Generated complete portfolio PDF
+output/pdf/

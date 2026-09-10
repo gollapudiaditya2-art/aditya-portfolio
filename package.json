@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/generate-static-routes.mjs",
+    "export:pdf": "npm run build && node scripts/export-portfolio-pdf.mjs",
     "images:optimize": "node scripts/generate-responsive-images.mjs",
     "images:dimensions": "node scripts/generate-image-dimensions.mjs",
     "preview": "vite preview",
@@ -13,7 +14,11 @@
     "test:visual": "node scripts/verify-visual-regression.mjs",
     "test:visual:update": "node scripts/verify-visual-regression.mjs --update",
     "test:alignment": "node scripts/audit-media-alignment.mjs",
-    "test:contrast": "node scripts/verify-header-contrast.mjs"
+    "test:contrast": "node scripts/verify-header-contrast.mjs",
+    "test:readable": "node scripts/verify-readable-export.mjs",
+    "test:capture": "node scripts/check-capture-compatibility.mjs",
+    "test:motion": "node scripts/verify-motion.mjs",
+    "test:structure": "node scripts/audit-accessible-structure.mjs"
   },
   "dependencies": {
     "react": "^19.2.7",

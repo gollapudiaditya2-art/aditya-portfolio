@@ -1,15 +1,12 @@
-import { readdir, readFile, stat } from 'node:fs/promises'
-import { extname, relative, resolve } from 'node:path'
+import { execFileSync } from 'node:child_process'
+import { readFile, stat } from 'node:fs/promises'
+import { extname } from 'node:path'
 
-const root = process.cwd()
-const ignoredDirectories = new Set([
-  '.agents', '.claude', '.codex', '.git', 'node_modules',
-  '.motion-check', '.tmp-a11y-review', '.visual-current',
-])
 const ignoredExtensions = new Set([
   '.avif', '.gif', '.ico', '.jpeg', '.jpg', '.pdf', '.png', '.webp',
   '.woff', '.woff2', '.zip',
 ])
+
 const rules = [
   ['OpenAI-style API key', /\bsk-(?:proj-)?[A-Za-z0-9_-]{16,}\b/g],
   ['AWS access key', /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/g],
@@ -18,29 +15,18 @@ const rules = [
   ['authorization bearer token', /\bAuthorization\b\s*[:=]\s*["'`]Bearer\s+[A-Za-z0-9._~-]{12,}["'`]/gi],
 ]
 
-const files = []
-async function walk(directory) {
-  for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (entry.isDirectory() && (
-      ignoredDirectories.has(entry.name)
-      || entry.name.startsWith('dist')
-      || entry.name.startsWith('.chrome-')
-      || entry.name.startsWith('.review-')
-    )) continue
-    const absolutePath = resolve(directory, entry.name)
-    if (entry.isDirectory()) await walk(absolutePath)
-    else if (entry.isFile() && !ignoredExtensions.has(extname(entry.name).toLowerCase())) files.push(absolutePath)
-  }
-}
-
-await walk(root)
+// Scan the files that can be committed, honoring the repository's ignore rules.
+const files = execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard'], { encoding: 'utf8' })
+  .split('\0').filter(file => file && !ignoredExtensions.has(extname(file).toLowerCase()))
 const findings = []
 for (const file of files) {
-  if ((await stat(file)).size > 2_000_000) continue
+  let info
+  try { info = await stat(file) } catch (error) { if (error.code === 'ENOENT') continue; throw error }
+  if (info.size > 2_000_000) continue
   const content = await readFile(file, 'utf8')
   for (const [rule, pattern] of rules) {
     pattern.lastIndex = 0
-    if (pattern.test(content)) findings.push({ file: relative(root, file), rule })
+    if (pattern.test(content)) findings.push({ file, rule })
   }
 }
 
@@ -49,5 +35,5 @@ if (findings.length) {
   findings.forEach(({ file, rule }) => console.error(`- ${file}: ${rule}`))
   process.exitCode = 1
 } else {
-  console.log(`Secret scan passed (${files.length} text files checked; generated, tool, and binary directories excluded).`)
+  console.log(`Secret scan passed (${files.length} text files checked; Git-ignored and binary files excluded).`)
 }

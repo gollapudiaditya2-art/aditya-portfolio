@@ -1,16 +1,19 @@
 /* Scrollable shell and underlay menu. */
 
 /* Shell and underlay menu */
-body,#root { overflow: hidden; height: 100% }
+body,#root { overflow: visible; height: auto; min-height: 100vh }
 
 #shell {
-  position: fixed; inset: 0; z-index: 2; overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+  position: relative; inset: auto; z-index: 2; min-height: 100vh; overflow: visible; scrollbar-width: none;
   -ms-overflow-style: none; background: var(--ground); color: var(--ink); transform: translateZ(0);
   transform-origin: center;
   transition: transform .62s cubic-bezier(.76,0,.24,1),border-radius .62s cubic-bezier(.76,0,.24,1),box-shadow .62s cubic-bezier(.76,0,.24,1)
 }
 
 #shell::-webkit-scrollbar { width: 0; height: 0; display: none }
+
+body.scroll-frozen { height: var(--frozen-page-height); overflow: clip }
+#shell.shell-frozen { position: fixed; inset: 0; min-height: 0; overflow-y: auto; overflow-x: hidden }
 
 body.menu-open #shell {
   transform: translateX(-23vw) scale(.58); border-radius: 26px;

@@ -1,10 +1,11 @@
+import { scrollSurface } from '../scrollSurface.js'
 import { useEffect, useState } from 'react'
 
 export function FloatingBackToTop({ shellRef, activeScreen, isMenuOpen }) {
   const [hasScrolled, setHasScrolled] = useState(false)
 
   useEffect(() => {
-    const shell = shellRef.current
+    const shell = scrollSurface(shellRef.current)
     if (!shell) return undefined
 
     let frame = 0
@@ -27,7 +28,7 @@ export function FloatingBackToTop({ shellRef, activeScreen, isMenuOpen }) {
 
   const scrollToTop = () => {
     const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-    shellRef.current?.scrollTo({ top: 0, behavior })
+    scrollSurface(shellRef.current)?.scrollTo({ top: 0, behavior })
   }
 
   const isVisible = hasScrolled && !isMenuOpen

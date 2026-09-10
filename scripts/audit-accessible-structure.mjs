@@ -1,35 +1,9 @@
-const chromeUrl = process.env.A11Y_CHROME_URL || 'http://127.0.0.1:9224'
-const siteUrl = process.env.A11Y_SITE_URL || 'http://127.0.0.1:4173/'
-const routes = [
-  '', 'about', 'id-index', 'id-aurio', 'id-arc', 'id-bastion', 'ux-index',
-  'ux-forkast-visual', 'ux-forkast-process', 'ux-forkast-testing',
-  'ux-cura-visual', 'ux-cura-process', 'ux-cura-testing',
-]
+import { browserSession, wait } from './browser-session.mjs'
+import { ROUTES } from '../src/routes.js'
 
-const target = await (await fetch(`${chromeUrl}/json/new?about:blank`, { method: 'PUT' })).json()
-const socket = new WebSocket(target.webSocketDebuggerUrl)
-await new Promise((resolve, reject) => {
-  socket.onopen = resolve
-  socket.onerror = reject
-})
-
-let messageId = 0
-const pending = new Map()
-socket.onmessage = ({ data }) => {
-  const message = JSON.parse(data)
-  if (!message.id || !pending.has(message.id)) return
-  const [resolve, reject] = pending.get(message.id)
-  pending.delete(message.id)
-  if (message.error) reject(message.error)
-  else resolve(message.result)
-}
-
-const send = (method, params = {}) => new Promise((resolve, reject) => {
-  const id = ++messageId
-  pending.set(id, [resolve, reject])
-  socket.send(JSON.stringify({ id, method, params }))
-})
-const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds))
+const browser = await browserSession()
+const { send, baseUrl } = browser
+const routes = Object.keys(ROUTES).filter(route => route !== 'not-found')
 
 async function inspect(label) {
   const { nodes } = await send('Accessibility.getFullAXTree')
@@ -74,24 +48,29 @@ async function inspect(label) {
   }
 }
 
-const results = []
-for (const route of routes) {
-  await send('Page.navigate', { url: `${siteUrl}?a11y=${encodeURIComponent(route || 'home')}${route ? `#${route}` : ''}` })
-  await wait(500)
-  results.push(await inspect(route || 'home'))
-}
+try {
+  const results = []
+  for (const route of routes) {
+    await send('Page.navigate', { url: `${baseUrl}${ROUTES[route]}?a11y=${route}` })
+    await wait(500)
+    results.push(await inspect(route || 'home'))
+  }
 
-await send('Runtime.evaluate', { expression: 'document.querySelector("#menubtn").click()' })
-await wait(150)
-const menu = await inspect('menu-open')
-const { result: menuButton } = await send('Runtime.evaluate', {
-  expression: `({
-    name: document.querySelector('#menubtn').getAttribute('aria-label'),
-    expanded: document.querySelector('#menubtn').getAttribute('aria-expanded'),
-    current: [...document.querySelectorAll('#menu [aria-current="page"]')].map((element) => element.innerText.trim()),
-  })`,
-  returnByValue: true,
-})
+  await send('Runtime.evaluate', { expression: 'document.querySelector("#menubtn").click()' })
+  await wait(150)
+  const menu = await inspect('menu-open')
+  const { result: menuButton } = await send('Runtime.evaluate', {
+    expression: `({
+      name: document.querySelector('#menubtn').getAttribute('aria-label'),
+      expanded: document.querySelector('#menubtn').getAttribute('aria-expanded'),
+      current: [...document.querySelectorAll('#menu [aria-current="page"]')].map((element) => element.innerText.trim()),
+    })`,
+    returnByValue: true,
+  })
 
-console.log(JSON.stringify({ routes: results, menu, menuButton: menuButton.value }, null, 2))
-socket.close()
+  const violations = results.filter(result => result.h1Count !== 1 || result.headingSkips.length || result.unnamedControls.length)
+  console.log(JSON.stringify({ routes: results, menu, menuButton: menuButton.value, violations }, null, 2))
+  if (violations.length || menu.unnamedControls.length) process.exitCode = 1
+
+
+} finally { await browser.close() }

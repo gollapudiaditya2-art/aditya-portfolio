@@ -1,3 +1,4 @@
+import { scrollSurface } from '../scrollSurface.js'
 import { useEffect } from 'react'
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
@@ -29,7 +30,7 @@ const findLengthAtProgress = (samples, targetProgress) => {
 
 export function usePageEffects(shellRef, activeScreen) {
   useEffect(() => {
-    const shell = shellRef.current
+    const shell = scrollSurface(shellRef.current)
     if (!shell) return undefined
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches

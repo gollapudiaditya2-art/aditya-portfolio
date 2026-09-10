@@ -127,7 +127,7 @@ function ProcessProgressRail({ waypoints }) {
       if (visible.length === 0) return
       const topmost = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b))
       setActiveId(topmost.target.id)
-    }, { root: scroller || null, rootMargin: '-15% 0px -70% 0px', threshold: 0 })
+    }, { root: scroller === document.documentElement ? null : scroller, rootMargin: '-15% 0px -70% 0px', threshold: 0 })
     targets.forEach((target) => observer.observe(target))
     return () => observer.disconnect()
   }, [waypoints])
@@ -135,7 +135,7 @@ function ProcessProgressRail({ waypoints }) {
   const goTo = (id) => {
     const target = document.getElementById(id)
     if (!target) return
-    target.scrollIntoView({ behavior: 'auto', block: 'start' })
+    target.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
 
   return <nav className="forkast-progress-rail" aria-label="Jump to section">

@@ -61,7 +61,7 @@ export function HomeScreen({ go }) {
           )}
         </div>
       </section>
-    
+
       <section className="whatido" id="what-i-do">
         <div className="wi-head"><h2>What I do</h2></div>
         <div className="stack">
@@ -93,7 +93,7 @@ export function HomeScreen({ go }) {
           </article>
         </div>
       </section>
-    
+
       <div className="proj-cards" id="work">
         <div className="pc-head"><h2>Selected work</h2></div>
         <a className="pcard aurio" href={routePath('id-aurio')} onClick={(event) => go('id-aurio', event)}>
@@ -105,9 +105,9 @@ export function HomeScreen({ go }) {
           <div className="pc-in"><h3>Forkast</h3><p>A restaurant allergy platform that carries one clear safety verdict from the diner's phone all the way to the line cook.</p><span className="pc-go">Read the case study <ArrowIcon /></span></div>
         </a>
       </div>
-    
+
       <ParallaxFooter go={go} />
-    
+
     </div></main>
   )
 }

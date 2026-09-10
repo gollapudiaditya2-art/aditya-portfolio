@@ -1,65 +1,16 @@
-import { spawn } from 'node:child_process'
-import { mkdtemp, rm } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { browserSession, wait } from './browser-session.mjs'
 import { ROUTES } from '../src/routes.js'
 
-const root = process.cwd()
-const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-const profile = await mkdtemp(join(tmpdir(), 'portfolio-insight-alignment-'))
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-const vite = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4178'], { cwd: root, stdio: 'ignore' })
-const chrome = spawn(chromePath, [
-  '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
-  '--remote-debugging-port=9228', `--user-data-dir=${profile}`, '--window-size=1440,900',
-], { stdio: 'ignore' })
-
-let ws
-let nextId = 0
-const pending = new Map()
-const send = (method, params = {}) => new Promise((resolve, reject) => {
-  const id = ++nextId
-  pending.set(id, { resolve, reject })
-  ws.send(JSON.stringify({ id, method, params }))
-})
-const evaluate = async (expression) => {
-  const response = await send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true })
-  if (response.result.exceptionDetails) throw new Error(response.result.exceptionDetails.text)
-  return response.result.result.value
-}
+const browser = await browserSession()
+const { send, evaluate } = browser
 
 try {
-  await wait(800)
-  let target
-  for (let attempt = 0; attempt < 30; attempt += 1) {
-    try {
-      const targets = await fetch('http://127.0.0.1:9228/json').then((response) => response.json())
-      target = targets.find((entry) => entry.type === 'page')
-      if (target) break
-    } catch {}
-    await wait(100)
-  }
-  if (!target) throw new Error('Chrome DevTools target was not available')
-
-  ws = new WebSocket(target.webSocketDebuggerUrl)
-  await new Promise((resolve, reject) => {
-    ws.addEventListener('open', resolve, { once: true })
-    ws.addEventListener('error', reject, { once: true })
-  })
-  ws.addEventListener('message', ({ data }) => {
-    const message = JSON.parse(data)
-    if (!message.id || !pending.has(message.id)) return
-    const { resolve, reject } = pending.get(message.id)
-    pending.delete(message.id)
-    if (message.error) reject(new Error(message.error.message)); else resolve(message)
-  })
-
   await send('Page.enable')
   await send('Runtime.enable')
 
   const checks = []
-  for (const [route, selector] of [['ux-forkast-process', '.fork-main-insight'], ['ux-cura-process', '.cura-main-insight']]) {
-    await send('Page.navigate', { url: `http://127.0.0.1:4178${ROUTES[route]}?audit=${route}` })
+  for (const [route, selector] of [['ux-cura-process', '.cura-main-insight']]) {
+    await send('Page.navigate', { url: `http://127.0.0.1:4183${ROUTES[route]}?audit=${route}` })
     await wait(3000)
     checks.push(await evaluate(`(() => {
       const figure = document.querySelector('${selector}')
@@ -103,7 +54,7 @@ try {
   for (const viewport of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'tablet', width: 768, height: 1024 }, { name: 'mobile', width: 390, height: 844 }]) {
     await send('Emulation.setDeviceMetricsOverride', { width: viewport.width, height: viewport.height, deviceScaleFactor: 1, mobile: viewport.name === 'mobile' })
     for (const route of routes) {
-      await send('Page.navigate', { url: `http://127.0.0.1:4178${ROUTES[route]}?sweep=${viewport.name}-${route}` })
+      await send('Page.navigate', { url: `http://127.0.0.1:4183${ROUTES[route]}?sweep=${viewport.name}-${route}` })
       await wait(500)
       alignmentSweeps.push(await evaluate(`(() => {
         const visible = (node) => {
@@ -218,16 +169,12 @@ try {
     roundedFullBleed: check.roundedFullBleed,
   }))
   const curaConceptChecks = alignmentSweeps
-    .filter((check) => check.route === 'ux-cura')
+    .filter((check) => check.route === 'ux-cura-process')
     .map(({ viewport, conceptModelHeight, conceptModelFitsViewport, problemStatementRadius }) => ({
       viewport, conceptModelHeight, conceptModelFitsViewport, problemStatementRadius,
     }))
   console.log(JSON.stringify({ checks, violations, curaConceptChecks, sweepSummary }, null, 2))
   if (violations.length || sweepViolations.length) process.exitCode = 1
 } finally {
-  if (ws) ws.close()
-  chrome.kill()
-  vite.kill()
-  await wait(150)
-  await rm(profile, { recursive: true, force: true })
+  await browser.close()
 }

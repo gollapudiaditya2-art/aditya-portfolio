@@ -1,0 +1,30 @@
+/* These rules only affect the browser's print/PDF output. */
+@media print {
+  @page { size: A4; margin: 12mm }
+  html, body, #root, #shell, #shell.shell-frozen, .page-content {
+    position: static !important; height: auto !important; min-height: 0 !important;
+    overflow: visible !important; transform: none !important; box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  * { animation: none !important; transition: none !important; print-color-adjust: exact; -webkit-print-color-adjust: exact }
+  .site-header, .menu, .page-transition, .skip-link, .floating-back-to-top,
+  .case-contents, .forkast-progress-rail, .home-draw-path, .footer-game .dino-game { display: none !important }
+  .scard { position: relative !important; top: auto !important; transform: none !important; height: auto !important; min-height: 0 !important; margin-bottom: 8mm }
+  .pcard, .work-card, .scard, .parallax-footer { break-inside: avoid }
+  .parallax-footer { min-height: 0 !important; padding-block: 8mm !important }
+  .parallax-footer-inner { transform: none !important; min-height: 0 !important; padding-block: 8mm !important }
+  .parallax-footer { --footer-dim: 0 !important; --footer-parallax: 0px !important }
+  .tl-body h3, .tl-body p { opacity: 1 !important }
+  .tl-line-fill { transform: scaleY(1) !important }
+  .screen { min-height: 0 !important }
+  .experience-timeline-section > h2 { position: static !important }
+  .cura-journey-native, .cura-wireframes { overflow: visible !important }
+  .cura-journey-plot { min-width: 0 !important }
+  .cura-wireframe-grid { width: auto !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important }
+  h1, h2, h3, h4 { break-after: avoid }
+  p { orphans: 3; widows: 3 }
+  img, figure { break-inside: avoid }
+  img { max-height: 245mm !important; object-fit: contain }
+  .portfolio-print-page { break-before: page }
+  .portfolio-print-page:first-child { break-before: auto }
+}

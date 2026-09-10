@@ -62,9 +62,7 @@ function BirdSprite() {
 export function DinoFooterGame() {
   const [status, setStatus] = useState('idle')
   const [finalScore, setFinalScore] = useState(0)
-  const [reducedMotion, setReducedMotion] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  )
+  const [reducedMotion, setReducedMotion] = useState(false)
   const stageRef = useRef(null)
   const dinoRef = useRef(null)
   const scoreRef = useRef(null)
@@ -294,6 +292,7 @@ export function DinoFooterGame() {
         resetScene()
       }
     }
+    handleMotionPreference(query)
     query.addEventListener('change', handleMotionPreference)
     return () => query.removeEventListener('change', handleMotionPreference)
   }, [resetScene])

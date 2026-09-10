@@ -1,3 +1,4 @@
+import { scrollSurface } from '../scrollSurface.js'
 import { useEffect } from 'react'
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
@@ -8,7 +9,7 @@ const easeOutBack = (value) => {
 
 export function useCardStack(shellRef, activeScreen) {
   useEffect(() => {
-    const shell = shellRef.current
+    const shell = scrollSurface(shellRef.current)
     const cards = Array.from(shell?.querySelectorAll('.scard') ?? [])
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 

@@ -2,7 +2,8 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0 }
 
-html { scroll-behavior: smooth; height: 100%; overflow: hidden }
+html { scroll-behavior: smooth; height: auto; min-height: 100%; overflow-x: clip; overflow-y: auto; scrollbar-width: none }
+html::-webkit-scrollbar { display: none; width: 0; height: 0 }
 
 body {
   font-family: var(--disp); background: var(--ground); color: var(--ink); -webkit-font-smoothing: antialiased;

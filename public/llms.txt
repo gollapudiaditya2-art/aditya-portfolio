@@ -19,6 +19,10 @@ Aditya is an industrial and UX/UI designer. This site presents independently com
 - [About](https://adityagollapudi.com/about): Background, front-end development experience, and education.
 - [Colophon](https://adityagollapudi.com/colophon): How this portfolio was designed and built.
 
+## Complete portfolio
+
+- [Printable portfolio](https://adityagollapudi.com/portfolio-print/): All 14 portfolio routes in one document, readable without JavaScript and suitable for browser PDF export.
+
 ## Contact
 
 - Email: gollapudi.aditya71@gmail.com

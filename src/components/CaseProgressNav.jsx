@@ -1,3 +1,4 @@
+import { scrollSurface } from '../scrollSurface.js'
 import { ProgressNav } from '../design-system/index.js'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
@@ -12,7 +13,7 @@ export function CaseProgressNav({ label, items, appearance = 'case' }) {
   const sectionKey = items.map((item) => item.id).join('|')
 
   useEffect(() => {
-    const shell = document.getElementById('shell')
+    const shell = scrollSurface(document.getElementById('shell'))
     const sections = sectionKey.split('|').map((id) => document.getElementById(id)).filter(Boolean)
     if (!shell || sections.length === 0) return undefined
 
